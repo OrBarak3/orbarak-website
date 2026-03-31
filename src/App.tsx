@@ -1,15 +1,19 @@
 import { motion, useReducedMotion } from 'framer-motion';
 import { useEffect, useMemo, useState } from 'react';
+import { BackToTopButton } from './components/BackToTopButton';
 import { ContactSection } from './components/ContactSection';
 import { ExperienceItem } from './components/ExperienceItem';
+import { Footer } from './components/Footer';
 import { Hero } from './components/Hero';
 import { Navbar } from './components/Navbar';
 import { ProjectCard } from './components/ProjectCard';
 import { SectionTitle } from './components/SectionTitle';
 import { SkillCategory } from './components/SkillCategory';
 import {
+  availabilityStatus,
   contactLinks,
   experience,
+  footerMeta,
   heroFacts,
   heroMetrics,
   heroSnippet,
@@ -60,12 +64,33 @@ export default function App() {
         transition: { duration: 0.65, ease: revealEase },
       };
 
+  const staggerContainer = shouldReduceMotion
+    ? {}
+    : {
+        initial: 'hidden',
+        whileInView: 'visible',
+        viewport: { once: true, amount: 0.1 },
+        variants: {
+          hidden: {},
+          visible: { transition: { staggerChildren: 0.1 } },
+        },
+      };
+
+  const staggerChild = shouldReduceMotion
+    ? {}
+    : {
+        variants: {
+          hidden: { opacity: 0, y: 20 },
+          visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: revealEase } },
+        },
+      };
+
   return (
     <div className="min-h-screen bg-background text-text">
       <div className="fixed inset-0 -z-20 bg-[radial-gradient(circle_at_20%_0%,rgba(34,211,238,0.12),transparent_28%),radial-gradient(circle_at_80%_10%,rgba(14,165,233,0.12),transparent_24%),linear-gradient(180deg,#020617_0%,#020617_100%)]" />
       <div className="fixed inset-0 -z-10 bg-[linear-gradient(rgba(15,23,42,0.0),rgba(15,23,42,0.7))]" />
 
-      <Navbar items={navItems} activeSection={activeSection} />
+      <Navbar items={navItems} activeSection={activeSection} availability={availabilityStatus} />
 
       <main>
         <Hero
@@ -83,15 +108,17 @@ export default function App() {
           <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
             <SectionTitle
               eyebrow="Projects"
-              title="LLM systems designed for production reliability, reviewability, and business impact."
-              description="Each project emphasizes structured outputs, measurable evaluation, and routing logic that reduces unnecessary human effort while keeping quality thresholds explicit."
+              title="Selected aiOla projects centered on tagging automation and transcript review."
+              description="The featured work focuses on structured validation, LLM routing logic, and selective human review to reduce manual effort without losing control over quality."
             />
 
-            <div className="mt-12 grid gap-6">
+            <motion.div className="mt-12 grid gap-10" {...staggerContainer}>
               {projects.map((project) => (
-                <ProjectCard key={project.id} project={project} />
+                <motion.div key={project.id} {...staggerChild}>
+                  <ProjectCard project={project} />
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
         </motion.section>
 
@@ -103,15 +130,17 @@ export default function App() {
           <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
             <SectionTitle
               eyebrow="Skills"
-              title="A practical toolkit for eval-heavy AI systems."
-              description="The skill mix is centered on getting LLM workflows to behave consistently in real-world settings, then instrumenting them so teams can trust the results."
+              title="Tools and skills used in day-to-day applied AI work."
+              description="This section follows the CV directly: LLM workflow design, agentic tooling, internal Python systems, data pipelines, and cross-functional delivery skills."
             />
 
-            <div className="mt-12 grid gap-6 lg:grid-cols-2">
+            <motion.div className="mt-12 grid gap-6 lg:grid-cols-2" {...staggerContainer}>
               {skillGroups.map((group) => (
-                <SkillCategory key={group.title} group={group} />
+                <motion.div key={group.title} {...staggerChild}>
+                  <SkillCategory group={group} />
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
         </motion.section>
 
@@ -123,19 +152,20 @@ export default function App() {
           <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
             <SectionTitle
               eyebrow="Experience"
-              title="Bridging workflow design, evaluation strategy, and client-facing AI delivery."
-              description="The through-line is taking ambiguous business processes and turning them into robust AI systems with measurable quality, clear review states, and usable structured outputs."
+              title="Current AI engineering work backed by an engineering foundation."
+              description="The CV pairs hands-on aiOla delivery in production-oriented AI systems with a Mechanical Engineering background from Tel Aviv University."
             />
 
-            <div className="mt-12 space-y-8">
+            <motion.div className="mt-12 space-y-8" {...staggerContainer}>
               {experience.map((entry, index) => (
-                <ExperienceItem
-                  key={entry.company}
-                  entry={entry}
-                  isLast={index === experience.length - 1}
-                />
+                <motion.div key={entry.company} {...staggerChild}>
+                  <ExperienceItem
+                    entry={entry}
+                    isLast={index === experience.length - 1}
+                  />
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
         </motion.section>
 
@@ -144,43 +174,36 @@ export default function App() {
             <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
               <SectionTitle
                 eyebrow="About"
-                title="A systems-minded AI engineer with product context."
-                description="Or Barak combines hands-on implementation with a strong understanding of how AI workflows need to perform in enterprise settings: not only accurate, but reliable, reviewable, and valuable in production."
+                title="Additional context drawn directly from the CV."
+                description="Beyond core AI workflow work, the background includes engineering studies, military service, first-aid volunteering, and bilingual communication."
               />
 
-              <div className="rounded-[2rem] border border-white/10 bg-white/[0.03] p-6 shadow-card backdrop-blur-xl sm:p-8">
+              <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 shadow-card backdrop-blur-xl sm:rounded-[2rem] sm:p-8">
                 <div className="grid gap-4">
-                  <div className="rounded-3xl border border-white/8 bg-slate-950/80 p-5">
-                    <div className="font-mono text-xs uppercase tracking-[0.2em] text-accent-soft">
-                      Applied AI focus
-                    </div>
+                  <div className="panel-hover rounded-3xl border border-white/8 bg-slate-950/80 p-5">
+                    <div className="ui-eyebrow text-accent-soft">Current focus</div>
                     <p className="mt-3 text-sm leading-7 text-slate-300 sm:text-base">
-                      At aiOla, the work centered on converting speech into structured JSON
-                      outputs for enterprise workflows, improving prompt behavior, strengthening
-                      schema design, and building evaluation methods that tracked accuracy,
-                      latency, and business usefulness together.
+                      At aiOla, the work centers on designing, evaluating, and improving
+                      LLM-based workflows that turn spoken conversations into structured
+                      business data, with internal tooling for automation, validation, and
+                      operational analysis.
                     </p>
                   </div>
 
-                  <div className="rounded-3xl border border-white/8 bg-slate-950/80 p-5">
-                    <div className="font-mono text-xs uppercase tracking-[0.2em] text-accent-soft">
-                      Engineering approach
-                    </div>
+                  <div className="panel-hover rounded-3xl border border-white/8 bg-slate-950/80 p-5">
+                    <div className="ui-eyebrow text-accent-soft">Education &amp; service</div>
                     <p className="mt-3 text-sm leading-7 text-slate-300 sm:text-base">
-                      The approach is technical and pragmatic: define the contract, validate the
-                      output, measure the failure modes, and keep a human review path where it
-                      actually improves the system.
+                      Or Barak earned a B.Sc. in Mechanical Engineering from Tel Aviv
+                      University and served as a Search and Rescue Combat Soldier from 2015
+                      to 2018.
                     </p>
                   </div>
 
-                  <div className="rounded-3xl border border-white/8 bg-slate-950/80 p-5">
-                    <div className="font-mono text-xs uppercase tracking-[0.2em] text-accent-soft">
-                      Foundation
-                    </div>
+                  <div className="panel-hover rounded-3xl border border-white/8 bg-slate-950/80 p-5">
+                    <div className="ui-eyebrow text-accent-soft">Languages &amp; volunteering</div>
                     <p className="mt-3 text-sm leading-7 text-slate-300 sm:text-base">
-                      A Mechanical Engineering degree from Tel Aviv University contributed strong
-                      training in machine learning, programming, robotics, statistics, and data
-                      analysis, which now supports production-focused AI engineering work.
+                      Hebrew is native, English is fluent, and the CV also lists volunteer
+                      first-aid work with Magen David Adom.
                     </p>
                   </div>
                 </div>
@@ -190,7 +213,10 @@ export default function App() {
         </motion.section>
 
         <ContactSection links={contactLinks} />
+        <Footer meta={footerMeta} />
       </main>
+
+      <BackToTopButton />
     </div>
   );
 }

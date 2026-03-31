@@ -13,12 +13,10 @@ export function ExperienceItem({ entry, isLast }: ExperienceItemProps) {
         0{isLast ? 2 : 1}
       </div>
 
-      <div className="rounded-[2rem] border border-white/10 bg-white/[0.03] p-6 shadow-card backdrop-blur-xl">
+      <div className="panel-hover rounded-2xl border border-white/10 bg-white/[0.03] p-5 shadow-card backdrop-blur-xl sm:rounded-[2rem] sm:p-6">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
-            <div className="font-mono text-xs uppercase tracking-[0.2em] text-accent-soft">
-              {entry.label}
-            </div>
+            <div className="ui-eyebrow text-accent-soft">{entry.label}</div>
             <h3 className="mt-3 text-2xl font-semibold text-white">{entry.company}</h3>
             <p className="mt-2 text-base text-slate-200">{entry.role}</p>
           </div>
@@ -43,4 +41,3 @@ export function ExperienceItem({ entry, isLast }: ExperienceItemProps) {
     </div>
   );
 }
-

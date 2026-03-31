@@ -6,12 +6,10 @@ interface SkillCategoryProps {
 
 export function SkillCategory({ group }: SkillCategoryProps) {
   return (
-    <article className="rounded-[2rem] border border-white/10 bg-white/[0.03] p-6 shadow-card backdrop-blur-xl">
+    <article className="panel-hover rounded-2xl border border-white/10 bg-white/[0.03] p-5 shadow-card backdrop-blur-xl sm:rounded-[2rem] sm:p-6">
       <div className="flex items-center justify-between gap-4">
         <div>
-          <div className="font-mono text-xs uppercase tracking-[0.2em] text-accent-soft">
-            {group.title}
-          </div>
+          <div className="ui-eyebrow text-accent-soft">{group.title}</div>
           <p className="mt-3 text-sm leading-7 text-slate-300">{group.description}</p>
         </div>
         <div className="rounded-full border border-white/10 bg-slate-950/80 px-3 py-1 font-mono text-xs text-slate-400">
@@ -32,4 +30,3 @@ export function SkillCategory({ group }: SkillCategoryProps) {
     </article>
   );
 }
-

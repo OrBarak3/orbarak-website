@@ -1,6 +1,8 @@
 import type {
+  AvailabilityStatus,
   ContactLink,
   ExperienceEntry,
+  FooterMeta,
   MetricStat,
   NavItem,
   Project,
@@ -17,110 +19,121 @@ export const navItems: NavItem[] = [
 ];
 
 export const heroMetrics: MetricStat[] = [
-  { value: '74%', label: 'less manual review' },
-  { value: '89%', label: 'open-text accuracy' },
-  { value: 'Enterprise', label: 'speech-to-JSON workflows' },
+  { value: '$12K/mo', label: 'saved by reducing external annotation work' },
+  { value: 'Weeks -> Minutes', label: 'LLM tagging process turnaround' },
+  { value: '2025-Present', label: 'AI Engineer at aiOla' },
 ];
 
 export const heroFacts: SummaryFact[] = [
-  { label: 'Role', value: 'AI Engineer / LLM Workflow Analyst' },
-  { label: 'Focus', value: 'Prompt Engineering, Evals, Structured Outputs' },
-  { label: 'Stack', value: 'Python, SQL, React, TypeScript, LangGraph' },
-  { label: 'Domain', value: 'Voice AI, Workflow Automation, Enterprise AI' },
+  { label: 'Role', value: 'AI Engineer, aiOla' },
+  { label: 'Focus', value: 'LLM workflows, AI validation systems, structured outputs' },
+  { label: 'Stack', value: 'Python, SQL, Snowflake, LangGraph, Streamlit' },
+  { label: 'Location', value: 'Tel Aviv, Israel' },
 ];
 
-export const workflowSteps = ['Extract', 'Evaluate', 'Judge', 'Human Review'];
+export const availabilityStatus: AvailabilityStatus = {
+  shortLabel: 'Available',
+  longLabel: 'Available for AI Engineering roles',
+};
+
+export const footerMeta: FooterMeta = {
+  name: 'Or Barak',
+  role: 'AI Engineer',
+  stack: 'React / TypeScript / Tailwind / Framer Motion',
+};
+
+export const workflowSteps = ['Transcribe', 'Extract', 'Validate', 'Route'];
 
 export const heroSnippet = `{
-  "workflow_id": "enterprise_intake_v2",
-  "status": "production_ready",
-  "signals": {
-    "schema_valid": true,
-    "confidence": 0.91,
+  "pipeline": "llm_agentic_tagging",
+  "source": "spoken_conversation",
+  "target": "structured_business_data",
+  "validation": {
+    "json_schema": true,
+    "agreement_scored": true,
     "needs_human_review": false
   },
-  "outputs": {
-    "site": "Plant 14",
-    "issue_type": "safety_report",
-    "priority": "high"
-  }
+  "routing": "selective_review"
 }`;
 
 export const projects: Project[] = [
   {
-    id: 'pseudo-tagging',
-    title: 'LLM Pseudo Tagging System',
+    id: 'llm-agentic-tagging',
+    eyebrow: 'Annotation Automation',
+    title: 'LLM Agentic Tagging',
     summary:
-      'Built a multi-model AI annotation and review workflow that reduced manual transcript tagging by comparing model outputs, scoring agreement, routing ambiguous fields to a judge model, and escalating only critical cases to humans.',
+      'Designed and built an AI-based annotation pipeline at aiOla that replaced large portions of manual transcript tagging with a high-precision multi-model workflow, reducing cost, turnaround time, and dependence on external annotators.',
     impact: [
-      'Reduced manual annotation workload by about 74%',
-      'Improved open-text accuracy from about 77% to 89%',
-      'Cut tagging errors significantly versus the manual baseline',
+      'Saved the company about $12,000 per month',
+      'Reduced the tagging process from weeks to a few minutes',
+      'Lowered dependence on external annotators through selective human review',
     ],
     tags: [
       'Python',
       'LangGraph',
-      'OpenRouter',
-      'Gemini',
-      'Sonnet',
-      'Embeddings',
-      'JSON Schema',
       'Snowflake',
-      'Evaluation Pipelines',
+      'JSON Schema',
+      'Structured Validation',
+      'Semantic Similarity',
+      'Judge Models',
+      'Workflow Automation',
     ],
     details: {
       architecture: {
         key: 'architecture',
         label: 'View Architecture',
-        title: 'Field-level agreement with model escalation',
+        title: 'High-precision multi-model annotation flow',
         description:
-          'The workflow balanced cost, accuracy, and human effort by using model agreement as a routing signal instead of sending every record through the same path.',
+          'The tagging system relied on multiple extraction steps and explicit routing logic so only the hard edge cases reached manual review.',
         bullets: [
-          'Pull transcript records and schema targets from Snowflake.',
-          'Run multiple extractor models against a shared JSON schema.',
-          'Compare outputs at the field level using exact checks and semantic similarity.',
-          'Route low-agreement fields to a judge model for arbitration.',
-          'Escalate only business-critical or low-confidence cases to human review.',
+          'Used parallel extraction to process the same transcript through a shared workflow.',
+          'Scored field-level agreement to decide when results were strong enough to accept.',
+          'Escalated disagreements through judge-model logic instead of reviewing every record manually.',
+          'Reserved human review for complex or ambiguous edge cases only.',
+          'Integrated the final routing path into the internal review workflow.',
         ],
-        snippet: `agreement_score := mean(field_match_scores)
-if agreement_score >= 0.92:
-  accept(record)
-elif critical_field_disagreement:
-  send_to_judge(record)
+        snippet: `parallel_extract(record)
+agreement_score = compare_fields(record.outputs)
+
+if agreement_score >= threshold:
+  route = "auto_accept"
+elif record.is_edge_case:
+  route = "judge_or_human_review"
 else:
-  human_review(record)`,
+  route = "judge_review"`,
       },
       schema: {
         key: 'schema',
         label: 'View Schema',
-        title: 'Structured annotation contract',
+        title: 'Validation-ready review payload',
         description:
-          'The extraction layer stayed stable by enforcing a predictable response shape that downstream scoring and reviewer tools could trust.',
+          'Structured validation, semantic similarity checks, and internal review routing all depended on a predictable payload that could be scored automatically.',
         bullets: [
-          'Shared schema ensured every model answered the same task.',
-          'Typed fields supported both exact and semantic evaluation strategies.',
-          'Reviewer tooling consumed the same payload to avoid translation steps.',
+          'Snowflake retrieval fed the pipeline with transcript data and review targets.',
+          'Structured validation logic kept the extracted fields reviewable and consistent.',
+          'Semantic similarity scoring supported open-text comparisons alongside exact checks.',
+          'Automated routing sent each record into the right internal review path.',
         ],
         snippet: `{
-  "message_id": "MSG-10428",
-  "intent": "maintenance_request",
-  "equipment": "compressor_12",
-  "severity": "medium",
-  "open_text_summary": "Intermittent pressure drop during startup",
-  "requires_review": false
+  "transcript_id": "TR-10428",
+  "field_agreement": 0.94,
+  "semantic_match": true,
+  "review_route": "auto_accept",
+  "requires_human_review": false
 }`,
       },
     },
   },
   {
-    id: 'asr-judging',
-    title: 'ASR Transcript Judging Pipeline',
+    id: 'asr-agentic-tagger',
+    eyebrow: 'Transcript Adjudication',
+    title: 'AI Automatic Speech Recognition Agentic Tagger',
     summary:
-      'Built a human-in-the-loop transcript review pipeline that combined ASR n-best candidates with LLM reasoning to accept easy cases automatically, review ambiguous ones with a judge model, and escalate uncertain transcripts to humans.',
+      'Built a human-in-the-loop ASR transcript judging pipeline at aiOla in Python and LangGraph, combining Triton ASR n-best outputs with Gemini via OpenRouter to process straightforward transcripts automatically and route ambiguous cases to LLM review.',
     impact: [
-      'Reduced manual labeling load on transcript reviewers',
-      'Improved annotation efficiency for high-volume review queues',
-      'Increased reliability in transcript quality decisions',
+      'Automatically processed straightforward transcripts with an AI review path',
+      'Escalated only uncertain recordings to human reviewers',
+      'Improved annotation efficiency and review speed',
     ],
     tags: [
       'Python',
@@ -128,101 +141,46 @@ else:
       'Triton ASR',
       'Gemini',
       'OpenRouter',
-      'Workflow Orchestration',
       'Human-in-the-Loop',
+      'LLM Review',
+      'Workflow Orchestration',
     ],
     details: {
       architecture: {
         key: 'architecture',
         label: 'View Architecture',
-        title: 'Decisioning pipeline for transcript acceptance',
+        title: 'Human-in-the-loop transcript judging flow',
         description:
-          'Instead of treating transcript review as a binary manual task, the pipeline used confidence bands and model reasoning to choose the cheapest trustworthy path.',
+          'The review path started with ASR candidates, automated the straightforward cases, and used model review only where the transcript decision was still uncertain.',
         bullets: [
-          'Collect n-best transcript hypotheses and confidence signals from ASR.',
-          'Auto-accept high-confidence cases when ranking and heuristics align.',
-          'Send ambiguous records to an LLM judge that compares competing transcripts.',
-          'Escalate uncertain or policy-sensitive cases to human annotators.',
-          'Log outcomes for continuous threshold tuning and QA analysis.',
+          'Collected Triton ASR n-best outputs as the starting point for transcript review.',
+          'Used Python and LangGraph to orchestrate the review and routing logic.',
+          'Sent ambiguous recordings to LLM review instead of forcing a manual-first process.',
+          'Escalated only uncertain recordings to human reviewers.',
+          'Improved annotation throughput by automating the easy cases end to end.',
         ],
-        snippet: `asr_candidates -> heuristic_gate -> judge_model -> reviewer_queue
-        | high confidence |        | ambiguous |
-        +-----------------+        +-----------> human`,
+        snippet: `triton_asr_nbest
+  -> confidence_gate
+  -> llm_review
+  -> human_reviewer_if_needed`,
       },
       schema: {
         key: 'schema',
         label: 'View Schema',
-        title: 'Transcript decision payload',
+        title: 'Transcript review decision record',
         description:
-          'The review record preserved the chosen transcript, the decision path, and the exact signal that justified escalation.',
+          'The decision payload kept the chosen transcript, its review path, and whether it still needed a human reviewer.',
         bullets: [
-          'Downstream teams could audit every automated accept/reject decision.',
-          'Signal logging made threshold tuning and failure analysis measurable.',
-          'Human reviewers received compact context rather than raw model dumps.',
+          'Stored the selected transcript with the route that produced it.',
+          'Made it clear whether the record came from automated review or needed a human.',
+          'Kept the ASR candidate source attached for downstream auditing.',
         ],
         snippet: `{
   "audio_id": "AUDIO-8821",
-  "decision": "judge_review",
+  "review_path": "llm_review",
+  "candidate_source": "triton_asr_nbest",
   "selected_transcript": "Valve pressure dropped after startup",
-  "candidate_count": 5,
-  "confidence_band": "medium",
-  "escalate_to_human": false
-}`,
-      },
-    },
-  },
-  {
-    id: 'enterprise-workflows',
-    title: 'Enterprise Speech-to-Structured-Output Workflows',
-    summary:
-      'Worked directly with enterprise clients to translate business requirements into production AI workflows that transformed speech into structured JSON outputs, with prompts, schemas, and evaluation loops designed around accuracy, latency, and business value.',
-    impact: [
-      'Delivered workflows that saved clients substantial time',
-      'Built eval methods to measure whether systems were truly useful in production',
-      'Connected product requirements directly with technical implementation',
-    ],
-    tags: [
-      'Prompt Engineering',
-      'JSON Schema',
-      'Python',
-      'Evaluation Design',
-      'Workflow Design',
-      'Enterprise AI',
-    ],
-    details: {
-      architecture: {
-        key: 'architecture',
-        label: 'View Architecture',
-        title: 'From business process to reliable AI workflow',
-        description:
-          'The delivery model connected client operations, prompt and schema design, and production evaluation so the workflow solved a measurable business problem rather than only a model-quality problem.',
-        bullets: [
-          'Map the business process into extractable structured fields and review states.',
-          'Design prompts and JSON schemas around the operational decisions the client needs.',
-          'Create evaluation sets that test usefulness, not only lexical accuracy.',
-          'Track latency, reviewer burden, and downstream value alongside model accuracy.',
-          'Iterate prompts and routing logic with client feedback from real usage.',
-        ],
-        snippet: `business need -> schema design -> prompt chain -> eval loop -> production rollout`,
-      },
-      schema: {
-        key: 'schema',
-        label: 'View Schema',
-        title: 'Example enterprise output shape',
-        description:
-          'A stable contract made it possible to plug speech-derived outputs into existing business systems and reviewer workflows.',
-        bullets: [
-          'Schemas were tailored per client workflow and downstream action.',
-          'Validation rules prevented low-quality payloads from flowing silently.',
-          'Structured outputs supported both automation and human review.',
-        ],
-        snippet: `{
-  "workflow": "field_service_dispatch",
-  "customer_id": "C-2041",
-  "site_name": "North Terminal",
-  "issue_type": "equipment_failure",
-  "priority": "urgent",
-  "next_action": "dispatch_technician"
+  "needs_human_review": false
 }`,
       },
     },
@@ -231,45 +189,44 @@ else:
 
 export const skillGroups: SkillGroup[] = [
   {
-    title: 'Core AI',
-    description: 'Designing reliable, measurable LLM behavior for production use cases.',
+    title: 'LLM Systems',
+    description: 'Designing prompt-driven workflows that produce reviewable, structured outputs.',
     items: [
       'Prompt Engineering',
       'LLM Evaluation',
       'Structured Outputs',
-      'JSON Schema Design',
-      'Human-in-the-Loop Systems',
-      'AI Workflow Design',
-      'Model Output Validation',
+      'JSON Schemas',
+      'Semantic Similarity',
+      'Embeddings',
     ],
   },
   {
-    title: 'LLM / Agent Systems',
-    description: 'Orchestration patterns for multi-step reasoning and review flows.',
+    title: 'Agentic Tooling',
+    description: 'Daily tools and orchestration patterns used to ship internal AI systems.',
     items: [
       'LangGraph',
-      'AI Orchestration',
-      'Multi-step Workflows',
-      'Judge Models',
-      'Semantic Similarity',
-      'Embeddings',
-      'OpenRouter',
+      'Claude Code',
+      'Codex',
+      'Cursor',
+      'AI Agents and Orchestration',
+      'Workflow Automation',
+      'RAG',
     ],
   },
   {
     title: 'Engineering',
-    description: 'Shipping robust tools, interfaces, and internal systems around AI.',
-    items: ['Python', 'SQL', 'TypeScript', 'React', 'Tailwind CSS', 'Streamlit', 'Git'],
+    description: 'Building production-oriented internal tools, integrations, and data pipelines.',
+    items: ['Python', 'SQL', 'Snowflake', 'Streamlit', 'API Integrations', 'Docker', 'AWS'],
   },
   {
-    title: 'Data / Analytics',
-    description: 'Measurement frameworks that connect model quality to business value.',
+    title: 'Modeling & Collaboration',
+    description: 'Applying analysis, experimentation, and cross-functional delivery to real AI work.',
     items: [
-      'Snowflake',
       'Data Analysis',
-      'Experimentation',
-      'Metrics Design',
-      'Workflow Performance Analysis',
+      'Technical Communication',
+      'Cross-Functional Collaboration',
+      'PyTorch',
+      'Model Fine-Tuning',
     ],
   },
 ];
@@ -277,27 +234,27 @@ export const skillGroups: SkillGroup[] = [
 export const experience: ExperienceEntry[] = [
   {
     company: 'aiOla',
-    role: 'LLM Workflow Analyst / AI Engineer',
-    label: 'Voice AI Company',
+    role: 'AI Engineer',
+    label: '2025 - Present',
     summary:
-      'Built production-minded AI workflows that turned speech into structured outputs for enterprise use cases.',
+      'Design, evaluate, and improve LLM-based workflows that convert spoken conversations into structured business data.',
     bullets: [
-      'Built LLM-driven workflows for enterprise speech-to-JSON use cases.',
-      'Designed evaluation methods for accuracy, latency, and business value.',
-      'Developed human-in-the-loop pipelines for transcript review and structured extraction.',
-      'Worked with prompts, schemas, model orchestration, and workflow optimization.',
-      'Collaborated with clients to translate business processes into production AI systems.',
+      'Built internal Python tools using LangGraph that reduced the LLM tagging process from weeks to a few minutes and saved about $12,000 per month.',
+      'Built production-oriented AI solutions using Claude Code, Cursor, Codex, JSON schema design, structured outputs, and multi-step workflow logic.',
+      'Developed Python tools and internal systems for evaluation, automation, validation, and operational analysis.',
+      'Worked with Snowflake data pipelines to retrieve transcripts, compare outputs, and measure workflow quality across use cases.',
+      'Collaborated directly with clients in technical scoping sessions to translate business logic into POCs, extraction rules, and AI workflows.',
     ],
   },
   {
     company: 'Tel Aviv University',
     role: 'B.Sc. in Mechanical Engineering',
-    label: 'Education',
+    label: '2019 - 2022',
     summary:
-      'Developed a strong quantitative and systems foundation that now supports applied AI engineering work.',
+      'Built the quantitative and systems foundation behind current AI engineering work through Mechanical Engineering studies and applied technical coursework.',
     bullets: [
-      'Relevant focus: Machine Learning, Advanced Programming, Robotics, Statistics, and Data Analysis.',
-      'Built a strong engineering mindset around problem decomposition and system reliability.',
+      'Relevant coursework: Machine Learning, Data Analysis, Statistics, Intro to Python, Advanced Python, and Robotics.',
+      'Completed a B.Sc. in Mechanical Engineering in 2022.',
     ],
   },
 ];
@@ -305,18 +262,23 @@ export const experience: ExperienceEntry[] = [
 export const contactLinks: ContactLink[] = [
   {
     label: 'Email',
-    value: 'your.email@example.com',
-    href: 'mailto:your.email@example.com',
+    value: 'orbarak1997@gmail.com',
+    href: 'mailto:orbarak1997@gmail.com',
   },
   {
     label: 'LinkedIn',
-    value: 'linkedin.com/in/your-profile',
-    href: 'https://linkedin.com/in/your-profile',
+    value: 'linkedin.com/in/or-barak-b046b71a2',
+    href: 'https://www.linkedin.com/in/or-barak-b046b71a2/',
   },
   {
     label: 'GitHub',
-    value: 'github.com/your-handle',
-    href: 'https://github.com/your-handle',
+    value: 'github.com/OrBarak3',
+    href: 'https://github.com/OrBarak3',
+  },
+  {
+    label: 'Resume',
+    value: 'Download CV',
+    href: '#',
+    note: 'PDF link coming soon',
   },
 ];
-

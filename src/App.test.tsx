@@ -16,19 +16,20 @@ describe('App', () => {
 
   it('renders all project titles', () => {
     render(<App />);
-    expect(screen.getByText('LLM Pseudo Tagging System')).toBeInTheDocument();
-    expect(screen.getByText('ASR Transcript Judging Pipeline')).toBeInTheDocument();
+    expect(screen.getByText('Annotation Automation')).toBeInTheDocument();
+    expect(screen.getByText('Transcript Adjudication')).toBeInTheDocument();
+    expect(screen.getByText('LLM Agentic Tagging')).toBeInTheDocument();
     expect(
-      screen.getByText('Enterprise Speech-to-Structured-Output Workflows'),
+      screen.getByText('AI Automatic Speech Recognition Agentic Tagger'),
     ).toBeInTheDocument();
   });
 
   it('renders all skill groups', () => {
     render(<App />);
-    expect(screen.getByText('Core AI')).toBeInTheDocument();
-    expect(screen.getByText('LLM / Agent Systems')).toBeInTheDocument();
+    expect(screen.getByText('LLM Systems')).toBeInTheDocument();
+    expect(screen.getByText('Agentic Tooling')).toBeInTheDocument();
     expect(screen.getByText('Engineering')).toBeInTheDocument();
-    expect(screen.getByText('Data / Analytics')).toBeInTheDocument();
+    expect(screen.getByText('Modeling & Collaboration')).toBeInTheDocument();
   });
 
   it('renders both experience entries', () => {
@@ -39,14 +40,22 @@ describe('App', () => {
 
   it('renders contact section with all links', () => {
     render(<App />);
-    expect(screen.getByText('your.email@example.com')).toBeInTheDocument();
-    expect(screen.getByText('linkedin.com/in/your-profile')).toBeInTheDocument();
-    expect(screen.getByText('github.com/your-handle')).toBeInTheDocument();
+    expect(screen.getByText('orbarak1997@gmail.com')).toBeInTheDocument();
+    expect(screen.getByText('linkedin.com/in/or-barak-b046b71a2')).toBeInTheDocument();
+    expect(screen.getByText('github.com/OrBarak3')).toBeInTheDocument();
   });
 
   it('renders the navbar', () => {
     render(<App />);
-    expect(screen.getByText('Or Barak')).toBeInTheDocument();
+    expect(screen.getAllByText(/Or Barak/).length).toBeGreaterThanOrEqual(1);
     expect(screen.getByText('OB')).toBeInTheDocument();
+    expect(screen.getByText('Available')).toBeInTheDocument();
+  });
+
+  it('renders the footer metadata', () => {
+    render(<App />);
+    expect(screen.getByText(/\d{4} Or Barak/)).toBeInTheDocument();
+    expect(screen.getAllByText('AI Engineer').length).toBeGreaterThanOrEqual(1);
+    expect(screen.getByText('React / TypeScript / Tailwind / Framer Motion')).toBeInTheDocument();
   });
 });

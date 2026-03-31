@@ -1,13 +1,17 @@
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { useEffect, useState } from 'react';
-import type { NavItem } from '../types/portfolio';
+import type { AvailabilityStatus, NavItem } from '../types/portfolio';
 
 interface NavbarProps {
   items: NavItem[];
   activeSection: string;
+  availability: AvailabilityStatus;
 }
 
-export function Navbar({ items, activeSection }: NavbarProps) {
+export function Navbar({ items, activeSection, availability }: NavbarProps) {
   const [open, setOpen] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
+  const menuEase = [0.22, 1, 0.36, 1] as const;
 
   useEffect(() => {
     setOpen(false);
@@ -22,33 +26,39 @@ export function Navbar({ items, activeSection }: NavbarProps) {
           </div>
           <div>
             <div className="text-sm font-medium tracking-wide text-slate-200">Or Barak</div>
-            <div className="font-mono text-[11px] uppercase tracking-[0.24em] text-slate-500">
-              AI Engineer
-            </div>
+            <div className="ui-meta-label text-slate-500">AI Engineer</div>
           </div>
         </a>
 
-        <nav className="hidden items-center gap-2 md:flex">
-          {items.map((item) => {
-            const isActive = activeSection === item.id;
+        <div className="hidden items-center gap-3 md:flex">
+          <nav className="flex items-center gap-2">
+            {items.map((item) => {
+              const isActive = activeSection === item.id;
 
-            return (
-              <a
-                key={item.id}
-                href={`#${item.id}`}
-                className={`rounded-full px-4 py-2 text-sm transition ${
-                  isActive
-                    ? 'bg-white/10 text-white'
-                    : 'text-slate-300 hover:bg-white/5 hover:text-white'
-                }`}
-              >
-                {item.label}
-              </a>
-            );
-          })}
-        </nav>
+              return (
+                <a
+                  key={item.id}
+                  href={`#${item.id}`}
+                  className={`rounded-full px-4 py-2 text-sm transition ${
+                    isActive
+                      ? 'bg-white/10 text-white'
+                      : 'text-slate-300 hover:bg-white/5 hover:text-white'
+                  }`}
+                >
+                  {item.label}
+                </a>
+              );
+            })}
+          </nav>
 
-        <div className="hidden md:block">
+          <div
+            className="ui-meta-label inline-flex items-center gap-2 rounded-full border border-emerald-400/25 bg-emerald-400/10 px-3 py-2 text-emerald-200"
+            aria-label={availability.longLabel}
+          >
+            <span className="h-2 w-2 rounded-full bg-emerald-300 shadow-[0_0_12px_rgba(110,231,183,0.75)]" />
+            {availability.shortLabel}
+          </div>
+
           <a
             href="#contact"
             className="inline-flex items-center rounded-full border border-accent/40 bg-accent/10 px-4 py-2 text-sm font-medium text-accent transition hover:border-accent/60 hover:bg-accent/15"
@@ -64,36 +74,70 @@ export function Navbar({ items, activeSection }: NavbarProps) {
           aria-label="Toggle navigation"
           aria-expanded={open}
         >
-          <span className="font-mono text-lg">{open ? 'X' : '='}</span>
+          {open ? (
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+              <line x1="4" y1="4" x2="16" y2="16" />
+              <line x1="16" y1="4" x2="4" y2="16" />
+            </svg>
+          ) : (
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+              <line x1="3" y1="5" x2="17" y2="5" />
+              <line x1="3" y1="10" x2="17" y2="10" />
+              <line x1="3" y1="15" x2="17" y2="15" />
+            </svg>
+          )}
         </button>
       </div>
 
-      {open ? (
-        <div className="border-t border-white/10 bg-slate-950/95 px-5 py-4 md:hidden">
-          <nav className="flex flex-col gap-2">
-            {items.map((item) => (
-              <a
-                key={item.id}
-                href={`#${item.id}`}
-                className={`rounded-2xl px-4 py-3 text-sm transition ${
-                  activeSection === item.id
-                    ? 'bg-white/10 text-white'
-                    : 'text-slate-300 hover:bg-white/5 hover:text-white'
-                }`}
-              >
-                {item.label}
-              </a>
-            ))}
-            <a
-              href="#contact"
-              className="mt-2 inline-flex items-center justify-center rounded-2xl border border-accent/40 bg-accent/10 px-4 py-3 text-sm font-medium text-accent transition hover:border-accent/60 hover:bg-accent/15"
+      <AnimatePresence initial={false}>
+        {open ? (
+          <motion.div
+            initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, height: 0 }}
+            animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, height: 'auto' }}
+            exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, height: 0 }}
+            transition={{ duration: shouldReduceMotion ? 0.12 : 0.24, ease: menuEase }}
+            className="overflow-hidden border-t border-white/10 bg-slate-950/95 md:hidden"
+          >
+            <motion.div
+              initial={shouldReduceMotion ? undefined : { opacity: 0, y: -8 }}
+              animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+              exit={shouldReduceMotion ? undefined : { opacity: 0, y: -8 }}
+              transition={{ duration: shouldReduceMotion ? 0.12 : 0.2, ease: menuEase }}
+              className="px-5 py-4"
             >
-              Get in Touch
-            </a>
-          </nav>
-        </div>
-      ) : null}
+              <div className="mb-4 flex items-center gap-3 rounded-2xl border border-emerald-400/20 bg-emerald-400/10 px-4 py-3">
+                <span className="h-2.5 w-2.5 rounded-full bg-emerald-300 shadow-[0_0_12px_rgba(110,231,183,0.75)]" />
+                <div>
+                  <div className="ui-meta-label text-emerald-200">{availability.shortLabel}</div>
+                  <div className="mt-1 text-sm text-emerald-50/90">{availability.longLabel}</div>
+                </div>
+              </div>
+
+              <nav className="flex flex-col gap-2">
+                {items.map((item) => (
+                  <a
+                    key={item.id}
+                    href={`#${item.id}`}
+                    className={`rounded-2xl px-4 py-3 text-sm transition ${
+                      activeSection === item.id
+                        ? 'bg-white/10 text-white'
+                        : 'text-slate-300 hover:bg-white/5 hover:text-white'
+                    }`}
+                  >
+                    {item.label}
+                  </a>
+                ))}
+                <a
+                  href="#contact"
+                  className="mt-2 inline-flex items-center justify-center rounded-2xl border border-accent/40 bg-accent/10 px-4 py-3 text-sm font-medium text-accent transition hover:border-accent/60 hover:bg-accent/15"
+                >
+                  Get in Touch
+                </a>
+              </nav>
+            </motion.div>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
     </header>
   );
 }
-

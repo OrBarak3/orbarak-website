@@ -4,9 +4,9 @@ import { createFact, createMetric } from '../test/helpers';
 import { Hero } from './Hero';
 
 const metrics = [
-  createMetric({ value: '74%', label: 'less manual review' }),
-  createMetric({ value: '89%', label: 'open-text accuracy' }),
-  createMetric({ value: 'Enterprise', label: 'speech-to-JSON workflows' }),
+  createMetric({ value: '$12K/mo', label: 'saved by reducing external annotation work' }),
+  createMetric({ value: 'Weeks -> Minutes', label: 'LLM tagging process turnaround' }),
+  createMetric({ value: '2025-Present', label: 'AI Engineer at aiOla' }),
 ];
 
 const facts = [
@@ -14,7 +14,7 @@ const facts = [
   createFact({ label: 'Focus', value: 'Prompt Engineering' }),
 ];
 
-const workflowSteps = ['Extract', 'Evaluate', 'Judge', 'Human Review'];
+const workflowSteps = ['Transcribe', 'Extract', 'Validate', 'Route'];
 const snippet = '{ "status": "ready" }';
 
 describe('Hero', () => {
@@ -24,16 +24,14 @@ describe('Hero', () => {
     );
     expect(
       screen.getByRole('heading', { level: 1 }),
-    ).toHaveTextContent('AI Engineer building reliable LLM workflows for production');
+    ).toHaveTextContent('AI Engineer building production-oriented LLM workflows');
   });
 
   it('renders the status badge', () => {
     render(
       <Hero facts={facts} metrics={metrics} workflowSteps={workflowSteps} snippet={snippet} />,
     );
-    expect(
-      screen.getByText(/Available for AI Engineering roles/),
-    ).toBeInTheDocument();
+    expect(screen.getByText(/aiOla · 2025-Present/)).toBeInTheDocument();
   });
 
   it('renders CTA links with correct hrefs', () => {
@@ -51,10 +49,10 @@ describe('Hero', () => {
     render(
       <Hero facts={facts} metrics={metrics} workflowSteps={workflowSteps} snippet={snippet} />,
     );
-    expect(screen.getByText('74%')).toBeInTheDocument();
-    expect(screen.getByText('less manual review')).toBeInTheDocument();
-    expect(screen.getByText('89%')).toBeInTheDocument();
-    expect(screen.getByText('Enterprise')).toBeInTheDocument();
+    expect(screen.getByText('$12K/mo')).toBeInTheDocument();
+    expect(screen.getByText('saved by reducing external annotation work')).toBeInTheDocument();
+    expect(screen.getByText('Weeks -> Minutes')).toBeInTheDocument();
+    expect(screen.getByText('2025-Present')).toBeInTheDocument();
   });
 
   it('renders all summary facts', () => {
@@ -71,18 +69,18 @@ describe('Hero', () => {
     render(
       <Hero facts={facts} metrics={metrics} workflowSteps={workflowSteps} snippet={snippet} />,
     );
+    expect(screen.getByText('Transcribe')).toBeInTheDocument();
     expect(screen.getByText('Extract')).toBeInTheDocument();
-    expect(screen.getByText('Evaluate')).toBeInTheDocument();
-    expect(screen.getByText('Judge')).toBeInTheDocument();
-    expect(screen.getByText('Human Review')).toBeInTheDocument();
+    expect(screen.getByText('Validate')).toBeInTheDocument();
+    expect(screen.getByText('Route')).toBeInTheDocument();
   });
 
   it('renders the JSON snippet in a code element', () => {
-    render(
+    const { container } = render(
       <Hero facts={facts} metrics={metrics} workflowSteps={workflowSteps} snippet={snippet} />,
     );
-    const codeEl = screen.getByText('{ "status": "ready" }');
-    expect(codeEl.tagName).toBe('CODE');
+    const codeEl = container.querySelector('code');
+    expect(codeEl).toHaveTextContent('{ "status": "ready" }');
   });
 
   it('renders the section with id="top"', () => {

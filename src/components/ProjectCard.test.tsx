@@ -9,6 +9,7 @@ const project = createProject();
 describe('ProjectCard', () => {
   it('renders project title, summary, and id badge', () => {
     render(<ProjectCard project={project} />);
+    expect(screen.getByText('Test Eyebrow')).toBeInTheDocument();
     expect(
       screen.getByRole('heading', { name: 'Test Project' }),
     ).toBeInTheDocument();
@@ -45,7 +46,7 @@ describe('ProjectCard', () => {
 
   it('expands architecture detail on click', async () => {
     const user = userEvent.setup();
-    render(<ProjectCard project={project} />);
+    const { container } = render(<ProjectCard project={project} />);
     const btn = screen.getByRole('button', { name: 'View Architecture' });
 
     await user.click(btn);
@@ -54,7 +55,7 @@ describe('ProjectCard', () => {
     expect(screen.getByText('Architecture Detail')).toBeInTheDocument();
     expect(screen.getByText('Architecture description')).toBeInTheDocument();
     expect(screen.getByText('Arch bullet 1')).toBeInTheDocument();
-    expect(screen.getByText('arch code here')).toBeInTheDocument();
+    expect(container.querySelector('code')).toHaveTextContent('arch code here');
   });
 
   it('collapses architecture detail on second click', async () => {

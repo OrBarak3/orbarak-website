@@ -15,6 +15,17 @@ export interface SummaryFact {
   value: string;
 }
 
+export interface AvailabilityStatus {
+  shortLabel: string;
+  longLabel: string;
+}
+
+export interface FooterMeta {
+  name: string;
+  role: string;
+  stack: string;
+}
+
 export interface ProjectDetailTab {
   key: DetailKey;
   label: string;
@@ -26,6 +37,7 @@ export interface ProjectDetailTab {
 
 export interface Project {
   id: string;
+  eyebrow: string;
   title: string;
   summary: string;
   impact: string[];
@@ -51,5 +63,5 @@ export interface ContactLink {
   label: string;
   value: string;
   href: string;
+  note?: string;
 }
-

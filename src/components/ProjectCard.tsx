@@ -1,6 +1,7 @@
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { useState } from 'react';
 import type { DetailKey, Project } from '../types/portfolio';
+import { highlightJson } from '../utils/highlightJson';
 
 interface ProjectCardProps {
   project: Project;
@@ -18,12 +19,10 @@ export function ProjectCard({ project }: ProjectCardProps) {
   };
 
   return (
-    <article className="group rounded-[2rem] border border-white/10 bg-white/[0.03] p-6 shadow-card backdrop-blur-xl transition duration-300 hover:border-accent/25 hover:bg-white/[0.05]">
+    <article className="panel-hover group rounded-2xl border border-white/10 bg-white/[0.03] p-5 shadow-card backdrop-blur-xl sm:rounded-[2rem] sm:p-6">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <div className="font-mono text-xs uppercase tracking-[0.22em] text-accent-soft">
-            Featured Project
-          </div>
+          <div className="ui-eyebrow text-accent-soft">{project.eyebrow}</div>
           <h3 className="mt-3 text-2xl font-semibold tracking-tight text-white">{project.title}</h3>
           <p className="mt-4 max-w-3xl text-sm leading-7 text-slate-300 sm:text-base">
             {project.summary}
@@ -37,7 +36,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
 
       <div className="mt-8 grid gap-4 lg:grid-cols-[0.95fr_1.05fr]">
         <div className="rounded-3xl border border-white/8 bg-slate-950/80 p-5">
-          <div className="font-mono text-xs uppercase tracking-[0.2em] text-slate-500">Impact</div>
+          <div className="ui-eyebrow text-slate-500">Impact</div>
           <div className="mt-4 space-y-3">
             {project.impact.map((item) => (
               <div
@@ -51,9 +50,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
         </div>
 
         <div className="rounded-3xl border border-white/8 bg-slate-950/70 p-5">
-          <div className="font-mono text-xs uppercase tracking-[0.2em] text-slate-500">
-            Technology Stack
-          </div>
+          <div className="ui-eyebrow text-slate-500">Technology Stack</div>
           <div className="mt-4 flex flex-wrap gap-2">
             {project.tags.map((tag) => (
               <span
@@ -102,9 +99,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
           >
             <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
               <div>
-                <div className="font-mono text-xs uppercase tracking-[0.2em] text-accent-soft">
-                  {detail.title}
-                </div>
+                <div className="ui-eyebrow text-accent-soft">{detail.title}</div>
                 <p className="mt-3 text-sm leading-7 text-slate-200">{detail.description}</p>
                 <div className="mt-5 space-y-3">
                   {detail.bullets.map((bullet) => (
@@ -119,12 +114,12 @@ export function ProjectCard({ project }: ProjectCardProps) {
               </div>
 
               <div className="rounded-3xl border border-white/8 bg-slate-950/85 p-5">
-                <div className="font-mono text-xs uppercase tracking-[0.2em] text-slate-500">
+                <div className="ui-eyebrow text-slate-500">
                   {detail.key === 'architecture' ? 'Flow Logic' : 'Schema Example'}
                 </div>
                 {detail.snippet ? (
                   <pre className="mt-4 overflow-x-auto font-mono text-xs leading-6 text-slate-300">
-                    <code>{detail.snippet}</code>
+                    <code>{highlightJson(detail.snippet)}</code>
                   </pre>
                 ) : null}
               </div>

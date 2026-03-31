@@ -67,8 +67,8 @@ describe('heroSnippet', () => {
 });
 
 describe('projects', () => {
-  it('has 3 entries', () => {
-    expect(projects).toHaveLength(3);
+  it('has 2 entries', () => {
+    expect(projects).toHaveLength(2);
   });
 
   it('each project has all required fields', () => {
@@ -120,8 +120,8 @@ describe('experience', () => {
 });
 
 describe('contactLinks', () => {
-  it('has 3 entries', () => {
-    expect(contactLinks).toHaveLength(3);
+  it('has 4 entries', () => {
+    expect(contactLinks).toHaveLength(4);
   });
 
   it('each link has valid href', () => {
@@ -129,7 +129,7 @@ describe('contactLinks', () => {
       expect(link.label).toBeTruthy();
       expect(link.value).toBeTruthy();
       expect(
-        link.href.startsWith('mailto:') || link.href.startsWith('https://'),
+        link.href.startsWith('mailto:') || link.href.startsWith('https://') || link.href === '#',
       ).toBe(true);
     }
   });

@@ -1,5 +1,6 @@
 import { motion, useReducedMotion } from 'framer-motion';
 import type { MetricStat, SummaryFact } from '../types/portfolio';
+import { highlightJson } from '../utils/highlightJson';
 
 interface HeroProps {
   facts: SummaryFact[];
@@ -27,19 +28,18 @@ export function Hero({ facts, metrics, workflowSteps, snippet }: HeroProps) {
 
       <div className="mx-auto grid max-w-7xl gap-10 px-5 pb-24 pt-8 sm:px-6 lg:grid-cols-[1.2fr_0.8fr] lg:px-8 lg:pb-28">
         <motion.div {...containerAnimation} className="max-w-3xl">
-          <div className="inline-flex items-center gap-3 rounded-full border border-accent/35 bg-accent/10 px-4 py-2 font-mono text-xs uppercase tracking-[0.2em] text-accent shadow-glow">
+          <div className="ui-eyebrow inline-flex items-center gap-3 rounded-full border border-accent/35 bg-accent/10 px-4 py-2 text-accent shadow-glow">
             <span className="h-2 w-2 rounded-full bg-accent shadow-[0_0_12px_rgba(115,216,255,0.8)]" />
-            Status: Available for AI Engineering roles
+            aiOla · 2025-Present
           </div>
 
           <h1 className="mt-8 max-w-4xl text-4xl font-semibold leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl">
-            AI Engineer building reliable LLM workflows for production
+            AI Engineer building production-oriented LLM workflows
           </h1>
 
           <p className="mt-6 max-w-3xl text-lg leading-8 text-slate-300">
-            Mechanical Engineering graduate turned AI workflow specialist with hands-on
-            experience building LLM systems, evaluation pipelines, structured extraction
-            workflows, and human-in-the-loop AI products for enterprise use cases.
+            Hands-on experience designing LLM workflows, building AI validation systems,
+            and translating business requirements into production-oriented AI solutions.
           </p>
 
           <div className="mt-8 flex flex-col gap-4 sm:flex-row">
@@ -57,11 +57,15 @@ export function Hero({ facts, metrics, workflowSteps, snippet }: HeroProps) {
             </a>
           </div>
 
-          <div className="mt-12 grid gap-4 sm:grid-cols-3">
-            {metrics.map((metric) => (
+          <div className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3">
+            {metrics.map((metric, index) => (
               <div
                 key={metric.label}
-                className="rounded-3xl border border-white/10 bg-white/[0.03] p-5 shadow-card backdrop-blur"
+                className={`rounded-3xl border border-white/10 bg-white/[0.03] p-4 shadow-card backdrop-blur sm:p-5 ${
+                  index === metrics.length - 1 && metrics.length % 2 !== 0
+                    ? 'col-span-2 sm:col-span-1'
+                    : ''
+                }`}
               >
                 <div className="font-mono text-2xl font-medium text-accent">{metric.value}</div>
                 <div className="mt-2 text-sm text-slate-300">{metric.label}</div>
@@ -85,10 +89,8 @@ export function Hero({ facts, metrics, workflowSteps, snippet }: HeroProps) {
 
           <div className="flex items-center justify-between">
             <div>
-              <p className="font-mono text-xs uppercase tracking-[0.24em] text-accent-soft">
-                System Summary
-              </p>
-              <h2 className="mt-2 text-xl font-semibold text-white">Production AI workflow profile</h2>
+              <p className="ui-eyebrow text-accent-soft">System Summary</p>
+              <h2 className="mt-2 text-xl font-semibold text-white">AI Engineer</h2>
             </div>
             <div className="rounded-full border border-white/10 bg-white/5 px-3 py-1 font-mono text-xs text-slate-300">
               profile.ts
@@ -101,9 +103,7 @@ export function Hero({ facts, metrics, workflowSteps, snippet }: HeroProps) {
                 key={fact.label}
                 className="flex flex-col gap-1 rounded-2xl border border-white/8 bg-white/[0.03] p-4"
               >
-                <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-slate-500">
-                  {fact.label}
-                </span>
+                <span className="ui-meta-label text-slate-500">{fact.label}</span>
                 <span className="text-sm leading-6 text-slate-200">{fact.value}</span>
               </div>
             ))}
@@ -111,10 +111,8 @@ export function Hero({ facts, metrics, workflowSteps, snippet }: HeroProps) {
 
           <div className="mt-6 rounded-2xl border border-white/8 bg-slate-950/80 p-4">
             <div className="flex items-center justify-between">
-              <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-slate-500">
-                Workflow
-              </span>
-              <span className="font-mono text-[11px] text-accent-soft">v2026.ready</span>
+              <span className="ui-meta-label text-slate-500">Workflow</span>
+              <span className="ui-meta-label text-accent-soft">cv.synced</span>
             </div>
             <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
               {workflowSteps.map((step, index) => (
@@ -134,11 +132,9 @@ export function Hero({ facts, metrics, workflowSteps, snippet }: HeroProps) {
           </div>
 
           <div className="mt-6 rounded-2xl border border-white/8 bg-slate-950/90 p-4">
-            <div className="mb-3 font-mono text-[11px] uppercase tracking-[0.2em] text-slate-500">
-              Example structured output
-            </div>
+            <div className="ui-meta-label mb-3 text-slate-500">Example structured output</div>
             <pre className="overflow-x-auto font-mono text-xs leading-6 text-slate-300">
-              <code>{snippet}</code>
+              <code>{highlightJson(snippet)}</code>
             </pre>
           </div>
         </motion.aside>

@@ -1,6 +1,8 @@
 import type {
+  AvailabilityStatus,
   ContactLink,
   ExperienceEntry,
+  FooterMeta,
   MetricStat,
   NavItem,
   Project,
@@ -23,6 +25,7 @@ export function createFact(overrides?: Partial<SummaryFact>): SummaryFact {
 export function createProject(overrides?: Partial<Project>): Project {
   return {
     id: 'test-project',
+    eyebrow: 'Test Eyebrow',
     title: 'Test Project',
     summary: 'A test project summary',
     impact: ['Impact 1', 'Impact 2', 'Impact 3'],
@@ -78,6 +81,25 @@ export function createContactLink(
     label: 'Email',
     value: 'test@example.com',
     href: 'mailto:test@example.com',
+    ...overrides,
+  };
+}
+
+export function createAvailabilityStatus(
+  overrides?: Partial<AvailabilityStatus>,
+): AvailabilityStatus {
+  return {
+    shortLabel: 'Available',
+    longLabel: 'Available for AI Engineering roles',
+    ...overrides,
+  };
+}
+
+export function createFooterMeta(overrides?: Partial<FooterMeta>): FooterMeta {
+  return {
+    name: 'Or Barak',
+    role: 'AI Engineer',
+    stack: 'React / TypeScript / Tailwind / Framer Motion',
     ...overrides,
   };
 }
