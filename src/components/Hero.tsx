@@ -87,14 +87,9 @@ export function Hero({ facts, metrics, workflowSteps, snippet }: HeroProps) {
             <div className="h-full w-24 bg-gradient-to-r from-transparent via-accent to-transparent opacity-80 animate-pulseLine" />
           </div>
 
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="ui-eyebrow text-accent-soft">System Summary</p>
-              <h2 className="mt-2 text-xl font-semibold text-white">AI Engineer</h2>
-            </div>
-            <div className="rounded-full border border-white/10 bg-white/5 px-3 py-1 font-mono text-xs text-slate-300">
-              profile.ts
-            </div>
+          <div>
+            <p className="ui-eyebrow text-accent-soft">System Summary</p>
+            <h2 className="mt-2 text-xl font-semibold text-white">AI Engineer</h2>
           </div>
 
           <div className="mt-6 space-y-4">
