@@ -65,7 +65,7 @@ export const projects: Project[] = [
     eyebrow: 'Annotation Automation',
     title: 'LLM Agentic Tagging',
     summary:
-      'Designed and built an AI-based annotation pipeline at aiOla that replaced large portions of manual transcript tagging with a high-precision multi-model workflow, reducing cost, turnaround time, and dependence on external annotators.',
+      'Designed and built an AI-based annotation pipeline that replaced large portions of manual transcript tagging with a high-precision multi-model workflow, reducing cost, turnaround time, and dependence on external annotators.',
     impact: [
       'Saved the company about $12,000 per month',
       'Reduced the tagging process from weeks to a few minutes',
@@ -132,7 +132,7 @@ else:
     eyebrow: 'Transcript Adjudication',
     title: 'AI Automatic Speech Recognition Agentic Tagger',
     summary:
-      'Built a human-in-the-loop ASR transcript judging pipeline at aiOla in Python and LangGraph, combining Triton ASR n-best outputs with Gemini via OpenRouter to process straightforward transcripts automatically and route ambiguous cases to LLM review.',
+      'Built a human-in-the-loop ASR transcript judging pipeline in Python and LangGraph, combining Triton ASR n-best outputs with Gemini via OpenRouter to process straightforward transcripts automatically and route ambiguous cases to LLM review.',
     impact: [
       'Automatically processed straightforward transcripts with an AI review path',
       'Escalated only uncertain recordings to human reviewers',

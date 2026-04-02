@@ -112,7 +112,7 @@ export default function App() {
           <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
             <SectionTitle
               eyebrow="Projects"
-              title="Selected aiOla projects centered on tagging automation and transcript review."
+              title="Selected professional projects centered on tagging automation and transcript review."
               description="The featured work focuses on structured validation, LLM routing logic, and selective human review to reduce manual effort without losing control over quality."
             />
 
@@ -157,7 +157,7 @@ export default function App() {
             <SectionTitle
               eyebrow="Experience"
               title="Current AI engineering work backed by an engineering foundation."
-              description="The CV pairs hands-on aiOla delivery in production-oriented AI systems with a Mechanical Engineering background from Tel Aviv University."
+              description="The CV pairs hands-on delivery in production-oriented AI systems with a Mechanical Engineering background from Tel Aviv University."
             />
 
             <motion.div className="mt-12 space-y-8" {...staggerContainer}>
