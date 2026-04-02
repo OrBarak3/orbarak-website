@@ -8,7 +8,7 @@ interface ExperienceItemProps {
 export function ExperienceItem({ entry, isLast }: ExperienceItemProps) {
   return (
     <div className="relative pl-10">
-      {!isLast ? <div className="absolute left-[15px] top-10 h-[calc(100%+2rem)] w-px bg-white/10" /> : null}
+      {!isLast ? <div className="absolute left-[15px] top-10 h-[calc(100%+2rem)] w-px bg-gradient-to-b from-accent/20 via-white/10 to-white/5" /> : null}
       <div className="absolute left-0 top-2 flex h-8 w-8 items-center justify-center rounded-full border border-accent/35 bg-accent/10 font-mono text-xs text-accent">
         0{isLast ? 2 : 1}
       </div>
@@ -18,9 +18,9 @@ export function ExperienceItem({ entry, isLast }: ExperienceItemProps) {
           <div>
             <div className="ui-eyebrow text-accent-soft">{entry.label}</div>
             <h3 className="mt-3 text-2xl font-semibold text-white">{entry.company}</h3>
-            <p className="mt-2 text-base text-slate-200">{entry.role}</p>
+            <p className="mt-2 text-base font-medium text-slate-200">{entry.role}</p>
           </div>
-          <div className="rounded-full border border-white/10 bg-slate-950/80 px-4 py-2 font-mono text-xs text-slate-400">
+          <div className="rounded-full border border-white/10 bg-slate-950/75 px-4 py-2 font-mono text-xs text-slate-300">
             experience
           </div>
         </div>
@@ -31,7 +31,7 @@ export function ExperienceItem({ entry, isLast }: ExperienceItemProps) {
           {entry.bullets.map((bullet) => (
             <div
               key={bullet}
-              className="rounded-2xl border border-white/8 bg-slate-950/70 px-4 py-3 text-sm leading-6 text-slate-200"
+              className="rounded-2xl border border-white/8 bg-slate-950/75 px-4 py-3 text-sm leading-6 text-slate-200"
             >
               {bullet}
             </div>

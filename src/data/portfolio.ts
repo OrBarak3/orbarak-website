@@ -106,45 +106,12 @@ export const projects: Project[] = [
       'LLM Review',
       'Workflow Orchestration',
     ],
-    details: {
-      architecture: {
-        key: 'architecture',
-        label: 'View Architecture',
-        title: 'Human-in-the-loop transcript judging flow',
-        description:
-          'The review path started with ASR candidates, automated the straightforward cases, and used model review only where the transcript decision was still uncertain.',
-        bullets: [
-          'Collected Triton ASR n-best outputs as the starting point for transcript review.',
-          'Used Python and LangGraph to orchestrate the review and routing logic.',
-          'Sent ambiguous recordings to LLM review instead of forcing a manual-first process.',
-          'Escalated only uncertain recordings to human reviewers.',
-          'Improved annotation throughput by automating the easy cases end to end.',
-        ],
-        snippet: `triton_asr_nbest
-  -> confidence_gate
-  -> llm_review
-  -> human_reviewer_if_needed`,
-      },
-      schema: {
-        key: 'schema',
-        label: 'View Schema',
-        title: 'Transcript review decision record',
-        description:
-          'The decision payload kept the chosen transcript, its review path, and whether it still needed a human reviewer.',
-        bullets: [
-          'Stored the selected transcript with the route that produced it.',
-          'Made it clear whether the record came from automated review or needed a human.',
-          'Kept the ASR candidate source attached for downstream auditing.',
-        ],
-        snippet: `{
-  "audio_id": "AUDIO-8821",
-  "review_path": "llm_review",
-  "candidate_source": "triton_asr_nbest",
-  "selected_transcript": "Valve pressure dropped after startup",
-  "needs_human_review": false
-}`,
-      },
-    },
+    highlights: [
+      'Built a human-in-the-loop ASR transcript judging pipeline in Python and LangGraph',
+      'Combined Triton ASR n-best outputs with Gemini via OpenRouter for automated transcript review',
+      'Designed confidence-based routing logic to escalate only uncertain recordings to human reviewers',
+      'Automated straightforward transcript processing end-to-end to improve annotation throughput',
+    ],
   },
 ];
 

@@ -20,6 +20,8 @@ module.exports = {
       boxShadow: {
         glow: '0 0 0 1px rgba(115, 216, 255, 0.18), 0 18px 60px rgba(6, 182, 212, 0.18)',
         card: '0 20px 80px rgba(5, 10, 22, 0.45)',
+        'glow-sm': '0 0 0 1px rgba(115, 216, 255, 0.12), 0 8px 24px rgba(6, 182, 212, 0.12)',
+        'glow-btn': '0 8px 24px rgba(115, 216, 255, 0.28)',
       },
       backgroundImage: {
         'hero-grid':

@@ -87,7 +87,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-background text-text">
-      <div className="fixed inset-0 -z-20 bg-[radial-gradient(circle_at_20%_0%,rgba(34,211,238,0.12),transparent_28%),radial-gradient(circle_at_80%_10%,rgba(14,165,233,0.12),transparent_24%),linear-gradient(180deg,#020617_0%,#020617_100%)]" />
+      <div className="fixed inset-0 -z-20 bg-[radial-gradient(circle_at_20%_0%,rgba(34,211,238,0.12),transparent_28%),radial-gradient(circle_at_80%_10%,rgba(14,165,233,0.10),transparent_24%),radial-gradient(circle_at_65%_65%,rgba(14,165,233,0.06),transparent_30%),linear-gradient(180deg,#020617_0%,#020617_100%)]" />
       <div className="fixed inset-0 -z-10 bg-[linear-gradient(rgba(15,23,42,0.0),rgba(15,23,42,0.7))]" />
 
       <Navbar items={navItems} activeSection={activeSection} availability={availabilityStatus} />
@@ -178,9 +178,9 @@ export default function App() {
                 description="Beyond core AI workflow work, the background includes engineering studies, military service, first-aid volunteering, and bilingual communication."
               />
 
-              <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 shadow-card backdrop-blur-xl sm:rounded-[2rem] sm:p-8">
+              <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 shadow-card backdrop-blur-xl sm:rounded-[2rem] sm:p-6">
                 <div className="grid gap-4">
-                  <div className="panel-hover rounded-3xl border border-white/8 bg-slate-950/80 p-5">
+                  <div className="panel-hover rounded-3xl border border-white/8 bg-slate-950/75 p-5">
                     <div className="ui-eyebrow text-accent-soft">Current focus</div>
                     <p className="mt-3 text-sm leading-7 text-slate-300 sm:text-base">
                       At aiOla, the work centers on designing, evaluating, and improving
@@ -190,7 +190,7 @@ export default function App() {
                     </p>
                   </div>
 
-                  <div className="panel-hover rounded-3xl border border-white/8 bg-slate-950/80 p-5">
+                  <div className="panel-hover rounded-3xl border border-white/8 bg-slate-950/75 p-5">
                     <div className="ui-eyebrow text-accent-soft">Education &amp; service</div>
                     <p className="mt-3 text-sm leading-7 text-slate-300 sm:text-base">
                       Or Barak earned a B.Sc. in Mechanical Engineering from Tel Aviv
@@ -199,7 +199,7 @@ export default function App() {
                     </p>
                   </div>
 
-                  <div className="panel-hover rounded-3xl border border-white/8 bg-slate-950/80 p-5">
+                  <div className="panel-hover rounded-3xl border border-white/8 bg-slate-950/75 p-5">
                     <div className="ui-eyebrow text-accent-soft">Languages &amp; volunteering</div>
                     <p className="mt-3 text-sm leading-7 text-slate-300 sm:text-base">
                       Hebrew is native, English is fluent, and the CV also lists volunteer

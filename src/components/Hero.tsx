@@ -33,7 +33,7 @@ export function Hero({ facts, metrics, workflowSteps, snippet }: HeroProps) {
             aiOla · 2025-Present
           </div>
 
-          <h1 className="mt-8 max-w-4xl text-4xl font-semibold leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl">
+          <h1 className="mt-8 max-w-4xl bg-gradient-to-br from-white via-white to-slate-300 bg-clip-text text-4xl font-semibold leading-tight tracking-tight text-transparent sm:text-5xl lg:text-6xl">
             AI Engineer building production-oriented LLM workflows
           </h1>
 
@@ -45,13 +45,13 @@ export function Hero({ facts, metrics, workflowSteps, snippet }: HeroProps) {
           <div className="mt-8 flex flex-col gap-4 sm:flex-row">
             <a
               href="#projects"
-              className="inline-flex items-center justify-center rounded-full border border-accent/45 bg-accent px-6 py-3 text-sm font-medium text-slate-950 transition hover:-translate-y-0.5 hover:bg-cyan-300"
+              className="inline-flex items-center justify-center rounded-full border border-accent/35 bg-accent px-6 py-3 text-sm font-medium text-slate-950 transition hover:-translate-y-0.5 hover:bg-cyan-300 hover:shadow-glow-btn"
             >
               View Projects
             </a>
             <a
               href="#contact"
-              className="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 px-6 py-3 text-sm font-medium text-white transition hover:-translate-y-0.5 hover:border-white/20 hover:bg-white/10"
+              className="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 px-6 py-3 text-sm font-medium text-white transition hover:-translate-y-0.5 hover:border-white/20 hover:bg-white/10 hover:shadow-[0_8px_20px_rgba(0,0,0,0.4)]"
             >
               Contact Me
             </a>
@@ -61,7 +61,7 @@ export function Hero({ facts, metrics, workflowSteps, snippet }: HeroProps) {
             {metrics.map((metric, index) => (
               <div
                 key={metric.label}
-                className={`rounded-3xl border border-white/10 bg-white/[0.03] p-4 shadow-card backdrop-blur sm:p-5 ${
+                className={`rounded-3xl border border-white/10 bg-white/[0.03] p-4 shadow-card backdrop-blur transition-colors duration-200 hover:border-white/20 sm:p-5 ${
                   index === metrics.length - 1 && metrics.length % 2 !== 0
                     ? 'col-span-2 sm:col-span-1'
                     : ''
@@ -81,7 +81,7 @@ export function Hero({ facts, metrics, workflowSteps, snippet }: HeroProps) {
               ? undefined
               : { duration: 0.8, delay: 0.15, ease: revealEase }
           }
-          className="relative rounded-[2rem] border border-white/10 bg-slate-900/65 p-6 shadow-card backdrop-blur-xl lg:mt-6"
+          className="relative rounded-[2rem] border border-white/10 bg-slate-950/75 p-6 shadow-card backdrop-blur-xl sm:p-7 lg:mt-6"
         >
           <div className="absolute inset-x-8 top-0 h-px overflow-hidden">
             <div className="h-full w-24 bg-gradient-to-r from-transparent via-accent to-transparent opacity-80 animate-pulseLine" />
@@ -104,7 +104,7 @@ export function Hero({ facts, metrics, workflowSteps, snippet }: HeroProps) {
             ))}
           </div>
 
-          <div className="mt-6 rounded-2xl border border-white/8 bg-slate-950/80 p-4">
+          <div className="mt-6 rounded-2xl border border-white/8 bg-slate-950/75 p-4">
             <div className="flex items-center justify-between">
               <span className="ui-meta-label text-slate-500">Workflow</span>
               <span className="ui-meta-label text-accent-soft">cv.synced</span>
