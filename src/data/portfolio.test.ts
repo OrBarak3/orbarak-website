@@ -81,8 +81,9 @@ describe('projects', () => {
     }
   });
 
-  it('each project has both architecture and schema details', () => {
+  it('projects with details have valid architecture and schema entries', () => {
     for (const project of projects) {
+      if (!project.details) continue;
       for (const key of ['architecture', 'schema'] as const) {
         const detail = project.details[key];
         expect(detail.key).toBe(key);

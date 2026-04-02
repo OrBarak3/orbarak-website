@@ -42,7 +42,8 @@ export interface Project {
   summary: string;
   impact: string[];
   tags: string[];
-  details: Record<DetailKey, ProjectDetailTab>;
+  highlights?: string[];
+  details?: Record<DetailKey, ProjectDetailTab>;
 }
 
 export interface SkillGroup {

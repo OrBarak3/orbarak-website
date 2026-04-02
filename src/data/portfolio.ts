@@ -81,51 +81,12 @@ export const projects: Project[] = [
       'Judge Models',
       'Workflow Automation',
     ],
-    details: {
-      architecture: {
-        key: 'architecture',
-        label: 'View Architecture',
-        title: 'High-precision multi-model annotation flow',
-        description:
-          'The tagging system relied on multiple extraction steps and explicit routing logic so only the hard edge cases reached manual review.',
-        bullets: [
-          'Used parallel extraction to process the same transcript through a shared workflow.',
-          'Scored field-level agreement to decide when results were strong enough to accept.',
-          'Escalated disagreements through judge-model logic instead of reviewing every record manually.',
-          'Reserved human review for complex or ambiguous edge cases only.',
-          'Integrated the final routing path into the internal review workflow.',
-        ],
-        snippet: `parallel_extract(record)
-agreement_score = compare_fields(record.outputs)
-
-if agreement_score >= threshold:
-  route = "auto_accept"
-elif record.is_edge_case:
-  route = "judge_or_human_review"
-else:
-  route = "judge_review"`,
-      },
-      schema: {
-        key: 'schema',
-        label: 'View Schema',
-        title: 'Validation-ready review payload',
-        description:
-          'Structured validation, semantic similarity checks, and internal review routing all depended on a predictable payload that could be scored automatically.',
-        bullets: [
-          'Snowflake retrieval fed the pipeline with transcript data and review targets.',
-          'Structured validation logic kept the extracted fields reviewable and consistent.',
-          'Semantic similarity scoring supported open-text comparisons alongside exact checks.',
-          'Automated routing sent each record into the right internal review path.',
-        ],
-        snippet: `{
-  "transcript_id": "TR-10428",
-  "field_agreement": 0.94,
-  "semantic_match": true,
-  "review_route": "auto_accept",
-  "requires_human_review": false
-}`,
-      },
-    },
+    highlights: [
+      'Built an AI annotation pipeline using LangGraph to automate manual transcript tagging at scale',
+      'Designed multi-step extraction and routing logic using structured outputs and JSON schema validation',
+      'Integrated Snowflake data pipelines to retrieve transcripts and measure workflow quality',
+      'Applied semantic similarity scoring and judge-model logic to minimize human review requirements',
+    ],
   },
   {
     id: 'asr-agentic-tagger',
