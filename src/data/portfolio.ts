@@ -1,11 +1,13 @@
 import type {
   AvailabilityStatus,
   ContactLink,
+  EducationEntry,
   ExperienceEntry,
   FooterMeta,
   MetricStat,
   NavItem,
   Project,
+  ServiceEntry,
   SkillGroup,
   SummaryFact,
 } from '../types/portfolio';
@@ -14,7 +16,8 @@ export const navItems: NavItem[] = [
   { id: 'projects', label: 'Projects' },
   { id: 'skills', label: 'Skills' },
   { id: 'experience', label: 'Experience' },
-  { id: 'about', label: 'About' },
+  { id: 'education', label: 'Education' },
+  { id: 'background', label: 'Background' },
   { id: 'contact', label: 'Contact' },
 ];
 
@@ -246,17 +249,38 @@ export const experience: ExperienceEntry[] = [
       'Collaborated directly with clients in technical scoping sessions to translate business logic into POCs, extraction rules, and AI workflows.',
     ],
   },
+];
+
+export const education: EducationEntry[] = [
   {
-    company: 'Tel Aviv University',
-    role: 'B.Sc. in Mechanical Engineering',
-    label: '2019 - 2022',
+    institution: 'Tel Aviv University',
+    degree: 'B.Sc. in Mechanical Engineering',
+    label: '2019 - 2024',
     summary:
       'Built the quantitative and systems foundation behind current AI engineering work through Mechanical Engineering studies and applied technical coursework.',
     bullets: [
       'Relevant coursework: Machine Learning, Data Analysis, Statistics, Intro to Python, Advanced Python, and Robotics.',
-      'Completed a B.Sc. in Mechanical Engineering in 2022.',
     ],
   },
+];
+
+export const militaryService: ServiceEntry = {
+  title: 'Search and Rescue Combat Soldier',
+  organization: 'Israel Defense Forces',
+  label: '2015 - 2018',
+  description: 'Served as a Search and Rescue Combat Soldier.',
+};
+
+export const volunteering: ServiceEntry = {
+  title: 'First Aid Volunteer',
+  organization: 'Magen David Adom',
+  label: 'Volunteer',
+  description: 'Volunteer first-aid responder with Magen David Adom.',
+};
+
+export const languages: { language: string; level: string }[] = [
+  { language: 'Hebrew', level: 'Native' },
+  { language: 'English', level: 'Fluent' },
 ];
 
 export const contactLinks: ContactLink[] = [
