@@ -12,7 +12,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
   const shouldReduceMotion = useReducedMotion();
   const detailEase = [0.22, 1, 0.36, 1] as const;
 
-  const detail = activeDetail ? project.details[activeDetail] : null;
+  const detail = activeDetail && project.details ? project.details[activeDetail] : null;
 
   const toggleDetail = (key: DetailKey) => {
     setActiveDetail((current) => (current === key ? null : key));
@@ -62,30 +62,48 @@ export function ProjectCard({ project }: ProjectCardProps) {
             ))}
           </div>
 
-          <div className="mt-6 flex flex-wrap gap-3">
-            {(['architecture', 'schema'] as DetailKey[]).map((key) => {
-              const item = project.details[key];
-              const selected = activeDetail === key;
+          {project.details && (
+            <div className="mt-6 flex flex-wrap gap-3">
+              {(['architecture', 'schema'] as DetailKey[]).map((key) => {
+                const item = project.details![key];
+                const selected = activeDetail === key;
 
-              return (
-                <button
-                  key={key}
-                  type="button"
-                  aria-expanded={selected}
-                  onClick={() => toggleDetail(key)}
-                  className={`inline-flex items-center rounded-full border px-4 py-2 text-sm transition ${
-                    selected
-                      ? 'border-accent/50 bg-accent/10 text-accent'
-                      : 'border-white/10 bg-white/5 text-slate-200 hover:border-white/20 hover:bg-white/10'
-                  }`}
-                >
-                  {item.label}
-                </button>
-              );
-            })}
-          </div>
+                return (
+                  <button
+                    key={key}
+                    type="button"
+                    aria-expanded={selected}
+                    onClick={() => toggleDetail(key)}
+                    className={`inline-flex items-center rounded-full border px-4 py-2 text-sm transition ${
+                      selected
+                        ? 'border-accent/50 bg-accent/10 text-accent'
+                        : 'border-white/10 bg-white/5 text-slate-200 hover:border-white/20 hover:bg-white/10'
+                    }`}
+                  >
+                    {item.label}
+                  </button>
+                );
+              })}
+            </div>
+          )}
         </div>
       </div>
+
+      {project.highlights && (
+        <div className="mt-4 rounded-3xl border border-white/8 bg-slate-950/80 p-5">
+          <div className="ui-eyebrow text-slate-500">Highlights</div>
+          <div className="mt-4 space-y-3">
+            {project.highlights.map((item) => (
+              <div
+                key={item}
+                className="rounded-2xl border border-white/8 bg-white/[0.03] px-4 py-3 text-sm leading-6 text-slate-200"
+              >
+                {item}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       <AnimatePresence initial={false}>
         {detail ? (
