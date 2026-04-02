@@ -12,14 +12,18 @@ import { SkillCategory } from './components/SkillCategory';
 import {
   availabilityStatus,
   contactLinks,
+  education,
   experience,
   footerMeta,
   heroFacts,
   heroMetrics,
   heroSnippet,
+  languages,
+  militaryService,
   navItems,
   projects,
   skillGroups,
+  volunteering,
   workflowSteps,
 } from './data/portfolio';
 
@@ -108,7 +112,7 @@ export default function App() {
           <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
             <SectionTitle
               eyebrow="Projects"
-              title="Selected aiOla projects centered on tagging automation and transcript review."
+              title="Selected professional projects centered on tagging automation and transcript review."
               description="The featured work focuses on structured validation, LLM routing logic, and selective human review to reduce manual effort without losing control over quality."
             />
 
@@ -153,7 +157,7 @@ export default function App() {
             <SectionTitle
               eyebrow="Experience"
               title="Current AI engineering work backed by an engineering foundation."
-              description="The CV pairs hands-on aiOla delivery in production-oriented AI systems with a Mechanical Engineering background from Tel Aviv University."
+              description="The CV pairs hands-on delivery in production-oriented AI systems with a Mechanical Engineering background from Tel Aviv University."
             />
 
             <motion.div className="mt-12 space-y-8" {...staggerContainer}>
@@ -169,7 +173,11 @@ export default function App() {
           </div>
         </motion.section>
 
-        <motion.section id="about" className="scroll-mt-28 py-24 sm:py-28" {...sectionMotion}>
+        <motion.section
+          id="education"
+          className="scroll-mt-28 py-24 sm:py-28"
+          {...sectionMotion}
+        >
           <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
             <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
               <SectionTitle
@@ -198,6 +206,9 @@ export default function App() {
                       to 2018.
                     </p>
                   </div>
+                </motion.div>
+              ))}
+            </motion.div>
 
                   <div className="panel-hover rounded-3xl border border-white/8 bg-slate-950/75 p-5">
                     <div className="ui-eyebrow text-accent-soft">Languages &amp; volunteering</div>
@@ -207,8 +218,8 @@ export default function App() {
                     </p>
                   </div>
                 </div>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
           </div>
         </motion.section>
 

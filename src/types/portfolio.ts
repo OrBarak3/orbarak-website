@@ -60,6 +60,21 @@ export interface ExperienceEntry {
   bullets: string[];
 }
 
+export interface EducationEntry {
+  institution: string;
+  degree: string;
+  label: string;
+  summary: string;
+  bullets: string[];
+}
+
+export interface ServiceEntry {
+  title: string;
+  organization: string;
+  label: string;
+  description: string;
+}
+
 export interface ContactLink {
   label: string;
   value: string;
