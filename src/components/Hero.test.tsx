@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import { createFact, createMetric } from '../test/helpers';
 import { Hero } from './Hero';
@@ -59,10 +59,15 @@ describe('Hero', () => {
     render(
       <Hero facts={facts} metrics={metrics} workflowSteps={workflowSteps} snippet={snippet} />,
     );
-    expect(screen.getByText('Role')).toBeInTheDocument();
-    expect(screen.getByText('AI Engineer')).toBeInTheDocument();
-    expect(screen.getByText('Focus')).toBeInTheDocument();
-    expect(screen.getByText('Prompt Engineering')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 2, name: 'AI Engineer' })).toBeInTheDocument();
+
+    const roleCard = screen.getByText('Role').closest('div');
+    expect(roleCard).not.toBeNull();
+    expect(within(roleCard as HTMLElement).getByText('AI Engineer')).toBeInTheDocument();
+
+    const focusCard = screen.getByText('Focus').closest('div');
+    expect(focusCard).not.toBeNull();
+    expect(within(focusCard as HTMLElement).getByText('Prompt Engineering')).toBeInTheDocument();
   });
 
   it('renders all workflow steps', () => {

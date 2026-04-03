@@ -29,13 +29,13 @@ export function ProjectCard({ project }: ProjectCardProps) {
           </p>
         </div>
 
-        <div className="rounded-full border border-white/10 bg-slate-950/80 px-4 py-2 font-mono text-xs text-slate-400">
+        <div className="rounded-full border border-white/10 bg-slate-950/75 px-4 py-2 font-mono text-xs text-slate-300">
           {project.id}
         </div>
       </div>
 
       <div className="mt-8 grid gap-4 lg:grid-cols-[0.95fr_1.05fr]">
-        <div className="rounded-3xl border border-white/8 bg-slate-950/80 p-5">
+        <div className="rounded-3xl border border-white/8 bg-slate-950/75 p-5">
           <div className="ui-eyebrow text-slate-500">Impact</div>
           <div className="mt-4 space-y-3">
             {project.impact.map((item) => (
@@ -49,7 +49,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
           </div>
         </div>
 
-        <div className="rounded-3xl border border-white/8 bg-slate-950/70 p-5">
+        <div className="rounded-3xl border border-white/8 bg-slate-950/75 p-5">
           <div className="ui-eyebrow text-slate-500">Technology Stack</div>
           <div className="mt-4 flex flex-wrap gap-2">
             {project.tags.map((tag) => (
@@ -76,7 +76,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
                     onClick={() => toggleDetail(key)}
                     className={`inline-flex items-center rounded-full border px-4 py-2 text-sm transition ${
                       selected
-                        ? 'border-accent/50 bg-accent/10 text-accent'
+                        ? 'panel-active text-accent'
                         : 'border-white/10 bg-white/5 text-slate-200 hover:border-white/20 hover:bg-white/10'
                     }`}
                   >
@@ -90,7 +90,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
       </div>
 
       {project.highlights && (
-        <div className="mt-4 rounded-3xl border border-white/8 bg-slate-950/80 p-5">
+        <div className="mt-4 rounded-3xl border border-white/8 bg-slate-950/75 p-5">
           <div className="ui-eyebrow text-slate-500">Highlights</div>
           <div className="mt-4 space-y-3">
             {project.highlights.map((item) => (
@@ -113,7 +113,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
             animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, height: 'auto', y: 0 }}
             exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, height: 0, y: -8 }}
             transition={{ duration: 0.28, ease: detailEase }}
-            className="mt-6 overflow-hidden rounded-3xl border border-accent/20 bg-[linear-gradient(180deg,rgba(8,47,73,0.45),rgba(15,23,42,0.9))] p-5"
+            className="mt-6 overflow-hidden rounded-3xl border border-accent/25 bg-[linear-gradient(180deg,rgba(8,47,73,0.45),rgba(15,23,42,0.9))] p-5"
           >
             <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
               <div>
@@ -131,7 +131,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
                 </div>
               </div>
 
-              <div className="rounded-3xl border border-white/8 bg-slate-950/85 p-5">
+              <div className="rounded-3xl border border-white/8 bg-slate-950/90 p-5">
                 <div className="ui-eyebrow text-slate-500">
                   {detail.key === 'architecture' ? 'Flow Logic' : 'Schema Example'}
                 </div>

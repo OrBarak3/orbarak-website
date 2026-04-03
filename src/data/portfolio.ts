@@ -14,6 +14,7 @@ import type {
 
 export const navItems: NavItem[] = [
   { id: 'projects', label: 'Projects' },
+  { id: 'demo', label: 'Demo' },
   { id: 'skills', label: 'Skills' },
   { id: 'experience', label: 'Experience' },
   { id: 'education', label: 'Education' },
@@ -59,7 +60,57 @@ export const heroSnippet = `{
   "routing": "selective_review"
 }`;
 
+export const demoSection = {
+  eyebrow: 'Live Demo',
+  title: 'Contract Review — try the actual LangGraph workflow.',
+  description:
+    'Paste or upload a vendor contract and watch the 7-node LangGraph pipeline parse clauses, extract risk details, apply policy rules, and route to automatic approval or a human review panel — all backed by a real Python service.',
+  exampleContract: `1. Services
+
+Vendor will provide implementation and support services for the platform described in the order form.
+
+2. Indemnity
+
+Customer shall indemnify, defend, and hold harmless Vendor and its affiliates from any and all claims, damages, and losses arising from Customer's use of the services.
+
+3. Liability
+
+Vendor's liability is unlimited for any claim related to this Agreement, including indirect, consequential, and punitive damages.
+
+4. Renewal
+
+This Agreement renews automatically for successive one-year terms unless Customer provides written notice at least 90 days before the renewal date.`,
+};
+
 export const projects: Project[] = [
+  {
+    id: 'agentic-contract-review',
+    eyebrow: 'Contract Intelligence',
+    title: 'Agentic Contract Review',
+    summary:
+      'A LangGraph-based contract review workflow that parses vendor agreements into clauses, uses AI to extract obligations and flag risk, applies deterministic policy rules to route contracts, and surfaces a human-in-the-loop review panel for high-risk cases — all with a full audit trail.',
+    impact: [
+      'End-to-end HITL pipeline: AI proposes, policy routes, humans decide',
+      'Supports PDF, DOCX, and plain-text contracts via a FastAPI service',
+      'Deterministic policy routing keeps governance predictable and auditable',
+    ],
+    tags: [
+      'Python',
+      'LangGraph',
+      'FastAPI',
+      'Human-in-the-Loop',
+      'Pydantic',
+      'Policy Routing',
+      'Audit Logging',
+      'Railway',
+    ],
+    highlights: [
+      'Built a 7-node LangGraph graph: ingest → parse → extract → policy → route → review → audit',
+      'Multi-provider LLM adapter (OpenAI, Gemini, Grok) with deterministic heuristic fallback',
+      'YAML-based policy packs define blocked clause types and confidence thresholds without redeploying',
+      'Interrupt/resume pattern enables a real human reviewer to approve, reject, or edit AI extractions',
+    ],
+  },
   {
     id: 'llm-agentic-tagging',
     eyebrow: 'Annotation Automation',
@@ -109,45 +160,12 @@ export const projects: Project[] = [
       'LLM Review',
       'Workflow Orchestration',
     ],
-    details: {
-      architecture: {
-        key: 'architecture',
-        label: 'View Architecture',
-        title: 'Human-in-the-loop transcript judging flow',
-        description:
-          'The review path started with ASR candidates, automated the straightforward cases, and used model review only where the transcript decision was still uncertain.',
-        bullets: [
-          'Collected Triton ASR n-best outputs as the starting point for transcript review.',
-          'Used Python and LangGraph to orchestrate the review and routing logic.',
-          'Sent ambiguous recordings to LLM review instead of forcing a manual-first process.',
-          'Escalated only uncertain recordings to human reviewers.',
-          'Improved annotation throughput by automating the easy cases end to end.',
-        ],
-        snippet: `triton_asr_nbest
-  -> confidence_gate
-  -> llm_review
-  -> human_reviewer_if_needed`,
-      },
-      schema: {
-        key: 'schema',
-        label: 'View Schema',
-        title: 'Transcript review decision record',
-        description:
-          'The decision payload kept the chosen transcript, its review path, and whether it still needed a human reviewer.',
-        bullets: [
-          'Stored the selected transcript with the route that produced it.',
-          'Made it clear whether the record came from automated review or needed a human.',
-          'Kept the ASR candidate source attached for downstream auditing.',
-        ],
-        snippet: `{
-  "audio_id": "AUDIO-8821",
-  "review_path": "llm_review",
-  "candidate_source": "triton_asr_nbest",
-  "selected_transcript": "Valve pressure dropped after startup",
-  "needs_human_review": false
-}`,
-      },
-    },
+    highlights: [
+      'Built a human-in-the-loop ASR transcript judging pipeline in Python and LangGraph',
+      'Combined Triton ASR n-best outputs with Gemini via OpenRouter for automated transcript review',
+      'Designed confidence-based routing logic to escalate only uncertain recordings to human reviewers',
+      'Automated straightforward transcript processing end-to-end to improve annotation throughput',
+    ],
   },
 ];
 

@@ -21,7 +21,7 @@ export function ContactSection({ links }: ContactSectionProps) {
               <a
                 key={link.label}
                 href={link.href}
-                className="panel-hover group rounded-3xl border border-white/10 bg-slate-950/70 p-5"
+                className="panel-hover group rounded-3xl border border-white/10 bg-slate-950/75 p-5 shadow-card backdrop-blur-xl"
               >
                 <div className="ui-eyebrow text-slate-500">{link.label}</div>
                 <div className="mt-4 text-lg font-medium text-white">{link.value}</div>

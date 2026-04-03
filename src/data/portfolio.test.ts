@@ -1,33 +1,40 @@
 import { describe, expect, it } from 'vitest';
 import {
   contactLinks,
+  demoSection,
+  education,
   experience,
   heroFacts,
   heroMetrics,
   heroSnippet,
+  languages,
+  militaryService,
   navItems,
   projects,
   skillGroups,
+  volunteering,
   workflowSteps,
 } from './portfolio';
 
 describe('navItems', () => {
-  it('has 5 entries with non-empty id and label', () => {
-    expect(navItems).toHaveLength(5);
+  it('contains the expected section ids in display order', () => {
+    const expectedIds = [
+      'projects',
+      'demo',
+      'skills',
+      'experience',
+      'education',
+      'background',
+      'contact',
+    ];
+    expect(navItems).toHaveLength(expectedIds.length);
     for (const item of navItems) {
       expect(item.id).toBeTruthy();
       expect(item.label).toBeTruthy();
     }
-  });
-
-  it('has no duplicate ids', () => {
     const ids = navItems.map((item) => item.id);
+    expect(ids).toEqual(expectedIds);
     expect(new Set(ids).size).toBe(ids.length);
-  });
-
-  it('ids match expected section ids', () => {
-    const ids = navItems.map((item) => item.id);
-    expect(ids).toEqual(['projects', 'skills', 'experience', 'about', 'contact']);
   });
 });
 
@@ -67,8 +74,12 @@ describe('heroSnippet', () => {
 });
 
 describe('projects', () => {
-  it('has 2 entries', () => {
-    expect(projects).toHaveLength(2);
+  it('includes every featured project in order', () => {
+    expect(projects.map((project) => project.id)).toEqual([
+      'agentic-contract-review',
+      'llm-agentic-tagging',
+      'asr-agentic-tagger',
+    ]);
   });
 
   it('each project has all required fields', () => {
@@ -96,6 +107,15 @@ describe('projects', () => {
   });
 });
 
+describe('demoSection', () => {
+  it('includes the copy required to render the contract review demo', () => {
+    expect(demoSection.eyebrow).toBeTruthy();
+    expect(demoSection.title).toContain('Contract Review');
+    expect(demoSection.description).toContain('LangGraph');
+    expect(demoSection.exampleContract).toContain('1. Services');
+  });
+});
+
 describe('skillGroups', () => {
   it('has 4 entries with non-empty fields', () => {
     expect(skillGroups).toHaveLength(4);
@@ -108,8 +128,8 @@ describe('skillGroups', () => {
 });
 
 describe('experience', () => {
-  it('has 2 entries with all required fields', () => {
-    expect(experience).toHaveLength(2);
+  it('has 1 entry with all required fields', () => {
+    expect(experience).toHaveLength(1);
     for (const entry of experience) {
       expect(entry.company).toBeTruthy();
       expect(entry.role).toBeTruthy();
@@ -117,6 +137,32 @@ describe('experience', () => {
       expect(entry.summary).toBeTruthy();
       expect(entry.bullets.length).toBeGreaterThan(0);
     }
+  });
+});
+
+describe('education', () => {
+  it('has 1 entry with all required fields', () => {
+    expect(education).toHaveLength(1);
+    for (const entry of education) {
+      expect(entry.institution).toBeTruthy();
+      expect(entry.degree).toBeTruthy();
+      expect(entry.label).toBeTruthy();
+      expect(entry.summary).toBeTruthy();
+      expect(entry.bullets.length).toBeGreaterThan(0);
+    }
+  });
+});
+
+describe('background', () => {
+  it('includes service, volunteering, and language metadata', () => {
+    expect(militaryService.title).toBeTruthy();
+    expect(militaryService.organization).toBeTruthy();
+    expect(volunteering.title).toBeTruthy();
+    expect(volunteering.organization).toBeTruthy();
+    expect(languages).toEqual([
+      { language: 'Hebrew', level: 'Native' },
+      { language: 'English', level: 'Fluent' },
+    ]);
   });
 });
 

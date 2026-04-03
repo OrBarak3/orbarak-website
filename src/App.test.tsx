@@ -9,19 +9,30 @@ describe('App', () => {
 
   it('renders all section ids', () => {
     render(<App />);
-    for (const id of ['projects', 'skills', 'experience', 'about', 'contact']) {
+    for (const id of ['projects', 'demo', 'skills', 'experience', 'education', 'background', 'contact']) {
       expect(document.getElementById(id)).toBeInTheDocument();
     }
   });
 
   it('renders all project titles', () => {
     render(<App />);
+    expect(screen.getByText('Contract Intelligence')).toBeInTheDocument();
+    expect(screen.getByText('Agentic Contract Review')).toBeInTheDocument();
     expect(screen.getByText('Annotation Automation')).toBeInTheDocument();
     expect(screen.getByText('Transcript Adjudication')).toBeInTheDocument();
     expect(screen.getByText('LLM Agentic Tagging')).toBeInTheDocument();
     expect(
       screen.getByText('AI Automatic Speech Recognition Agentic Tagger'),
     ).toBeInTheDocument();
+  });
+
+  it('renders the contract review demo section', () => {
+    render(<App />);
+    expect(screen.getByText('Live Demo')).toBeInTheDocument();
+    expect(
+      screen.getByText('Contract Review — try the actual LangGraph workflow.'),
+    ).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Run Contract Review/i })).toBeInTheDocument();
   });
 
   it('renders all skill groups', () => {
@@ -32,10 +43,12 @@ describe('App', () => {
     expect(screen.getByText('Modeling & Collaboration')).toBeInTheDocument();
   });
 
-  it('renders both experience entries', () => {
+  it('renders experience, education, and background details', () => {
     render(<App />);
     expect(screen.getByText('aiOla')).toBeInTheDocument();
     expect(screen.getByText('Tel Aviv University')).toBeInTheDocument();
+    expect(screen.getByText('Search and Rescue Combat Soldier')).toBeInTheDocument();
+    expect(screen.getByText('Hebrew')).toBeInTheDocument();
   });
 
   it('renders contact section with all links', () => {

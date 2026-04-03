@@ -2,6 +2,7 @@ import { motion, useReducedMotion } from 'framer-motion';
 import { useEffect, useMemo, useState } from 'react';
 import { BackToTopButton } from './components/BackToTopButton';
 import { ContactSection } from './components/ContactSection';
+import { ContractReviewDemo } from './components/ContractReviewDemo';
 import { ExperienceItem } from './components/ExperienceItem';
 import { Footer } from './components/Footer';
 import { Hero } from './components/Hero';
@@ -12,6 +13,7 @@ import { SkillCategory } from './components/SkillCategory';
 import {
   availabilityStatus,
   contactLinks,
+  demoSection,
   education,
   experience,
   footerMeta,
@@ -89,9 +91,17 @@ export default function App() {
         },
       };
 
+  const educationEntries = education.map((entry) => ({
+    company: entry.institution,
+    role: entry.degree,
+    label: entry.label,
+    summary: entry.summary,
+    bullets: entry.bullets,
+  }));
+
   return (
     <div className="min-h-screen bg-background text-text">
-      <div className="fixed inset-0 -z-20 bg-[radial-gradient(circle_at_20%_0%,rgba(34,211,238,0.12),transparent_28%),radial-gradient(circle_at_80%_10%,rgba(14,165,233,0.12),transparent_24%),linear-gradient(180deg,#020617_0%,#020617_100%)]" />
+      <div className="fixed inset-0 -z-20 bg-[radial-gradient(circle_at_20%_0%,rgba(34,211,238,0.12),transparent_28%),radial-gradient(circle_at_80%_10%,rgba(14,165,233,0.10),transparent_24%),radial-gradient(circle_at_65%_65%,rgba(14,165,233,0.06),transparent_30%),linear-gradient(180deg,#020617_0%,#020617_100%)]" />
       <div className="fixed inset-0 -z-10 bg-[linear-gradient(rgba(15,23,42,0.0),rgba(15,23,42,0.7))]" />
 
       <Navbar items={navItems} activeSection={activeSection} availability={availabilityStatus} />
@@ -123,6 +133,23 @@ export default function App() {
                 </motion.div>
               ))}
             </motion.div>
+          </div>
+        </motion.section>
+
+        <motion.section
+          id="demo"
+          className="scroll-mt-28 py-24 sm:py-28"
+          {...sectionMotion}
+        >
+          <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+            <SectionTitle
+              eyebrow={demoSection.eyebrow}
+              title={demoSection.title}
+              description={demoSection.description}
+            />
+            <div className="mt-12">
+              <ContractReviewDemo exampleContract={demoSection.exampleContract} />
+            </div>
           </div>
         </motion.section>
 
@@ -181,23 +208,17 @@ export default function App() {
           <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
             <SectionTitle
               eyebrow="Education"
-              title="Engineering foundation from Tel Aviv University."
-              description="A Mechanical Engineering degree with applied coursework in machine learning, data analysis, and Python."
+              title="Engineering training that supports the current AI systems work."
+              description="Formal coursework and quantitative foundations from Tel Aviv University complement the applied workflow, evaluation, and tooling experience."
             />
 
             <motion.div className="mt-12 space-y-8" {...staggerContainer}>
-              {education.map((entry, index) => (
-                <motion.div key={entry.institution} {...staggerChild}>
+              {educationEntries.map((entry, index) => (
+                <motion.div key={entry.company} {...staggerChild}>
                   <ExperienceItem
-                    entry={{
-                      company: entry.institution,
-                      role: entry.degree,
-                      label: entry.label,
-                      summary: entry.summary,
-                      bullets: entry.bullets,
-                    }}
-                    isLast={index === education.length - 1}
+                    entry={entry}
                     index={index}
+                    isLast={index === educationEntries.length - 1}
                     badge="education"
                   />
                 </motion.div>
@@ -214,46 +235,56 @@ export default function App() {
           <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
             <SectionTitle
               eyebrow="Background"
-              title="Military service, volunteering, and languages."
-              description="Additional background from the CV covering service, community work, and language proficiency."
+              title="Service, volunteering, and language fluency that support client-facing AI work."
+              description="The broader CV also includes military service, first-aid volunteering, and bilingual communication used in technical collaboration and stakeholder-facing delivery."
             />
 
-            <motion.div className="mt-12 grid gap-6 lg:grid-cols-2" {...staggerContainer}>
-              {[militaryService, volunteering].map((entry) => (
-                <motion.div key={entry.title} {...staggerChild}>
-                  <div className="panel-hover rounded-2xl border border-white/10 bg-white/[0.03] p-5 shadow-card backdrop-blur-xl sm:rounded-[2rem] sm:p-6">
-                    <div className="flex flex-wrap items-start justify-between gap-4">
-                      <div>
-                        <div className="ui-eyebrow text-accent-soft">{entry.label}</div>
-                        <h3 className="mt-3 text-xl font-semibold text-white">{entry.title}</h3>
-                        <p className="mt-2 text-base text-slate-200">{entry.organization}</p>
-                      </div>
-                      <div className="rounded-full border border-white/10 bg-slate-950/80 px-4 py-2 font-mono text-xs text-slate-400">
-                        {entry.label === 'Volunteer' ? 'volunteering' : 'military'}
+            <motion.div className="mt-12 grid gap-6 lg:grid-cols-3" {...staggerContainer}>
+              <motion.div
+                {...staggerChild}
+                className="panel-hover rounded-2xl border border-white/10 bg-white/[0.03] p-5 shadow-card backdrop-blur-xl sm:rounded-[2rem] sm:p-6"
+              >
+                <div className="ui-eyebrow text-accent-soft">{militaryService.label}</div>
+                <h3 className="mt-3 text-2xl font-semibold text-white">{militaryService.title}</h3>
+                <p className="mt-2 text-base font-medium text-slate-200">
+                  {militaryService.organization}
+                </p>
+                <p className="mt-5 text-sm leading-7 text-slate-300 sm:text-base">
+                  {militaryService.description}
+                </p>
+              </motion.div>
+
+              <motion.div
+                {...staggerChild}
+                className="panel-hover rounded-2xl border border-white/10 bg-white/[0.03] p-5 shadow-card backdrop-blur-xl sm:rounded-[2rem] sm:p-6"
+              >
+                <div className="ui-eyebrow text-accent-soft">{volunteering.label}</div>
+                <h3 className="mt-3 text-2xl font-semibold text-white">{volunteering.title}</h3>
+                <p className="mt-2 text-base font-medium text-slate-200">
+                  {volunteering.organization}
+                </p>
+                <p className="mt-5 text-sm leading-7 text-slate-300 sm:text-base">
+                  {volunteering.description}
+                </p>
+              </motion.div>
+
+              <motion.div
+                {...staggerChild}
+                className="panel-hover rounded-2xl border border-white/10 bg-white/[0.03] p-5 shadow-card backdrop-blur-xl sm:rounded-[2rem] sm:p-6"
+              >
+                <div className="ui-eyebrow text-accent-soft">Languages</div>
+                <div className="mt-5 grid gap-3">
+                  {languages.map((language) => (
+                    <div
+                      key={language.language}
+                      className="rounded-2xl border border-white/8 bg-slate-950/75 px-4 py-3"
+                    >
+                      <div className="text-sm font-medium text-white">{language.language}</div>
+                      <div className="mt-1 font-mono text-xs text-accent-soft">
+                        {language.level}
                       </div>
                     </div>
-                    <p className="mt-5 text-sm leading-7 text-slate-300 sm:text-base">
-                      {entry.description}
-                    </p>
-                  </div>
-                </motion.div>
-              ))}
-            </motion.div>
-
-            <motion.div className="mt-8" {...staggerContainer}>
-              <motion.div {...staggerChild}>
-                <div className="panel-hover rounded-2xl border border-white/10 bg-white/[0.03] p-5 shadow-card backdrop-blur-xl sm:rounded-[2rem] sm:p-6">
-                  <div className="ui-eyebrow text-accent-soft">Languages</div>
-                  <div className="mt-4 flex flex-wrap gap-3">
-                    {languages.map((lang) => (
-                      <span
-                        key={lang.language}
-                        className="rounded-full border border-white/10 bg-slate-950/80 px-4 py-2 font-mono text-sm text-slate-200"
-                      >
-                        {lang.language} — {lang.level}
-                      </span>
-                    ))}
-                  </div>
+                  ))}
                 </div>
               </motion.div>
             </motion.div>
