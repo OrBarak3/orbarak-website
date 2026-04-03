@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
   contactLinks,
+  demoSection,
   experience,
   heroFacts,
   heroMetrics,
@@ -12,22 +13,16 @@ import {
 } from './portfolio';
 
 describe('navItems', () => {
-  it('has 5 entries with non-empty id and label', () => {
-    expect(navItems).toHaveLength(5);
+  it('contains the expected section ids in display order', () => {
+    const expectedIds = ['projects', 'demo', 'skills', 'experience', 'about', 'contact'];
+    expect(navItems).toHaveLength(expectedIds.length);
     for (const item of navItems) {
       expect(item.id).toBeTruthy();
       expect(item.label).toBeTruthy();
     }
-  });
-
-  it('has no duplicate ids', () => {
     const ids = navItems.map((item) => item.id);
+    expect(ids).toEqual(expectedIds);
     expect(new Set(ids).size).toBe(ids.length);
-  });
-
-  it('ids match expected section ids', () => {
-    const ids = navItems.map((item) => item.id);
-    expect(ids).toEqual(['projects', 'skills', 'experience', 'about', 'contact']);
   });
 });
 
@@ -67,8 +62,12 @@ describe('heroSnippet', () => {
 });
 
 describe('projects', () => {
-  it('has 2 entries', () => {
-    expect(projects).toHaveLength(2);
+  it('includes every featured project in order', () => {
+    expect(projects.map((project) => project.id)).toEqual([
+      'agentic-contract-review',
+      'llm-agentic-tagging',
+      'asr-agentic-tagger',
+    ]);
   });
 
   it('each project has all required fields', () => {
@@ -93,6 +92,15 @@ describe('projects', () => {
         expect(detail.bullets.length).toBeGreaterThan(0);
       }
     }
+  });
+});
+
+describe('demoSection', () => {
+  it('includes the copy required to render the contract review demo', () => {
+    expect(demoSection.eyebrow).toBeTruthy();
+    expect(demoSection.title).toContain('Contract Review');
+    expect(demoSection.description).toContain('LangGraph');
+    expect(demoSection.exampleContract).toContain('1. Services');
   });
 });
 

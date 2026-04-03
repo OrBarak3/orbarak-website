@@ -1,5 +1,6 @@
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
+import { resolveDemoApiConfig } from '../utils/demoApiConfig';
 
 // ── types ─────────────────────────────────────────────────────────────────────
 
@@ -167,6 +168,10 @@ type DemoPhase = 'idle' | 'running' | 'interrupted' | 'completed' | 'error';
 export function ContractReviewDemo({ exampleContract }: ContractReviewDemoProps) {
   const shouldReduceMotion = useReducedMotion();
   const detailEase = [0.22, 1, 0.36, 1] as const;
+  const hostname = typeof window === 'undefined' ? '' : window.location.hostname;
+  const { apiUrl, isInteractive, statusMessage } = resolveDemoApiConfig(import.meta.env, hostname);
+  const unavailableMessage =
+    statusMessage ?? 'Interactive demo unavailable on this deployment.';
 
   // ── core state ──
   const [phase, setPhase] = useState<DemoPhase>('idle');
@@ -189,8 +194,6 @@ export function ContractReviewDemo({ exampleContract }: ContractReviewDemoProps)
   const [reviewDecision, setReviewDecision] = useState<'approve' | 'edit' | 'reject'>('approve');
   const [reviewerNotes, setReviewerNotes] = useState('');
   const [submittingReview, setSubmittingReview] = useState(false);
-
-  const API_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:8000';
 
   // ── progress animation effect ──
   useEffect(() => {
@@ -218,6 +221,12 @@ export function ContractReviewDemo({ exampleContract }: ContractReviewDemoProps)
   // ── handlers ──
 
   async function handleRun() {
+    if (!apiUrl) {
+      setErrorMessage(unavailableMessage);
+      setPhase('error');
+      return;
+    }
+
     setPhase('running');
     setErrorMessage(null);
     setRunResult(null);
@@ -237,7 +246,7 @@ export function ContractReviewDemo({ exampleContract }: ContractReviewDemoProps)
     }
 
     try {
-      const response = await fetch(`${API_URL}/api/run`, {
+      const response = await fetch(`${apiUrl}/api/run`, {
         method: 'POST',
         body: formData,
         // Do NOT set Content-Type — browser sets multipart boundary automatically
@@ -269,11 +278,16 @@ export function ContractReviewDemo({ exampleContract }: ContractReviewDemoProps)
   }
 
   async function handleReview() {
-    if (!threadId) return;
+    if (!threadId || !apiUrl) {
+      setErrorMessage(unavailableMessage);
+      setPhase('error');
+      return;
+    }
+
     setSubmittingReview(true);
 
     try {
-      const response = await fetch(`${API_URL}/api/resume/${threadId}`, {
+      const response = await fetch(`${apiUrl}/api/resume/${threadId}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -347,6 +361,13 @@ export function ContractReviewDemo({ exampleContract }: ContractReviewDemoProps)
         {/* ── INPUT PANEL ── */}
         {phase === 'idle' && (
           <motion.div key="input" {...panelAnim}>
+            {statusMessage && (
+              <div className="mb-4 rounded-2xl border border-amber-400/20 bg-amber-400/5 p-4">
+                <div className="ui-eyebrow text-amber-300">Preview Notice</div>
+                <p className="mt-2 text-sm leading-6 text-amber-100/90">{statusMessage}</p>
+              </div>
+            )}
+
             {/* Tab switcher */}
             <div className="flex gap-3">
               <button
@@ -425,7 +446,7 @@ export function ContractReviewDemo({ exampleContract }: ContractReviewDemoProps)
             {/* Run button */}
             <button
               type="button"
-              disabled={activeTab === 'file' && !fileInput}
+              disabled={!isInteractive || (activeTab === 'file' && !fileInput)}
               onClick={handleRun}
               className="mt-6 inline-flex w-full items-center justify-center rounded-full border border-accent/35 bg-accent px-6 py-3 text-sm font-medium text-slate-950 transition hover:-translate-y-0.5 hover:bg-cyan-300 hover:shadow-glow-btn disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:translate-y-0"
             >
