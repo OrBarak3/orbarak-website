@@ -2,6 +2,7 @@ import { motion, useReducedMotion } from 'framer-motion';
 import { useEffect, useMemo, useState } from 'react';
 import { BackToTopButton } from './components/BackToTopButton';
 import { ContactSection } from './components/ContactSection';
+import { ContractReviewDemo } from './components/ContractReviewDemo';
 import { ExperienceItem } from './components/ExperienceItem';
 import { Footer } from './components/Footer';
 import { Hero } from './components/Hero';
@@ -12,6 +13,7 @@ import { SkillCategory } from './components/SkillCategory';
 import {
   availabilityStatus,
   contactLinks,
+  demoSection,
   experience,
   footerMeta,
   heroFacts,
@@ -119,6 +121,23 @@ export default function App() {
                 </motion.div>
               ))}
             </motion.div>
+          </div>
+        </motion.section>
+
+        <motion.section
+          id="demo"
+          className="scroll-mt-28 py-24 sm:py-28"
+          {...sectionMotion}
+        >
+          <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+            <SectionTitle
+              eyebrow={demoSection.eyebrow}
+              title={demoSection.title}
+              description={demoSection.description}
+            />
+            <div className="mt-12">
+              <ContractReviewDemo exampleContract={demoSection.exampleContract} />
+            </div>
           </div>
         </motion.section>
 

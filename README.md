@@ -2,6 +2,8 @@
 
 Single-page portfolio website for Or Barak, built with React, TypeScript, Tailwind CSS, and Framer Motion.
 
+* To run locally once the backend is up: echo "VITE_API_URL=http://localhost:8000" > .env.local && npm run dev                                   
+
 ## Local development
 
 ```bash

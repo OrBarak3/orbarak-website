@@ -12,6 +12,7 @@ import type {
 
 export const navItems: NavItem[] = [
   { id: 'projects', label: 'Projects' },
+  { id: 'demo', label: 'Demo' },
   { id: 'skills', label: 'Skills' },
   { id: 'experience', label: 'Experience' },
   { id: 'about', label: 'About' },
@@ -56,7 +57,57 @@ export const heroSnippet = `{
   "routing": "selective_review"
 }`;
 
+export const demoSection = {
+  eyebrow: 'Live Demo',
+  title: 'Contract Review — try the actual LangGraph workflow.',
+  description:
+    'Paste or upload a vendor contract and watch the 7-node LangGraph pipeline parse clauses, extract risk details, apply policy rules, and route to automatic approval or a human review panel — all backed by a real Python service.',
+  exampleContract: `1. Services
+
+Vendor will provide implementation and support services for the platform described in the order form.
+
+2. Indemnity
+
+Customer shall indemnify, defend, and hold harmless Vendor and its affiliates from any and all claims, damages, and losses arising from Customer's use of the services.
+
+3. Liability
+
+Vendor's liability is unlimited for any claim related to this Agreement, including indirect, consequential, and punitive damages.
+
+4. Renewal
+
+This Agreement renews automatically for successive one-year terms unless Customer provides written notice at least 90 days before the renewal date.`,
+};
+
 export const projects: Project[] = [
+  {
+    id: 'agentic-contract-review',
+    eyebrow: 'Contract Intelligence',
+    title: 'Agentic Contract Review',
+    summary:
+      'A LangGraph-based contract review workflow that parses vendor agreements into clauses, uses AI to extract obligations and flag risk, applies deterministic policy rules to route contracts, and surfaces a human-in-the-loop review panel for high-risk cases — all with a full audit trail.',
+    impact: [
+      'End-to-end HITL pipeline: AI proposes, policy routes, humans decide',
+      'Supports PDF, DOCX, and plain-text contracts via a FastAPI service',
+      'Deterministic policy routing keeps governance predictable and auditable',
+    ],
+    tags: [
+      'Python',
+      'LangGraph',
+      'FastAPI',
+      'Human-in-the-Loop',
+      'Pydantic',
+      'Policy Routing',
+      'Audit Logging',
+      'Railway',
+    ],
+    highlights: [
+      'Built a 7-node LangGraph graph: ingest → parse → extract → policy → route → review → audit',
+      'Multi-provider LLM adapter (OpenAI, Gemini, Grok) with deterministic heuristic fallback',
+      'YAML-based policy packs define blocked clause types and confidence thresholds without redeploying',
+      'Interrupt/resume pattern enables a real human reviewer to approve, reject, or edit AI extractions',
+    ],
+  },
   {
     id: 'llm-agentic-tagging',
     eyebrow: 'Annotation Automation',
