@@ -25,7 +25,7 @@ export function ExperienceItem({ entry, isLast, index, badge = 'experience' }: E
             <p className="mt-2 text-base font-medium text-slate-200">{entry.role}</p>
           </div>
           <div className="rounded-full border border-white/10 bg-slate-950/75 px-4 py-2 font-mono text-xs text-slate-300">
-            experience
+            {badge}
           </div>
         </div>
 

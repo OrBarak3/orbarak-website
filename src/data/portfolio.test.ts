@@ -2,19 +2,31 @@ import { describe, expect, it } from 'vitest';
 import {
   contactLinks,
   demoSection,
+  education,
   experience,
   heroFacts,
   heroMetrics,
   heroSnippet,
+  languages,
+  militaryService,
   navItems,
   projects,
   skillGroups,
+  volunteering,
   workflowSteps,
 } from './portfolio';
 
 describe('navItems', () => {
   it('contains the expected section ids in display order', () => {
-    const expectedIds = ['projects', 'demo', 'skills', 'experience', 'about', 'contact'];
+    const expectedIds = [
+      'projects',
+      'demo',
+      'skills',
+      'experience',
+      'education',
+      'background',
+      'contact',
+    ];
     expect(navItems).toHaveLength(expectedIds.length);
     for (const item of navItems) {
       expect(item.id).toBeTruthy();
@@ -116,8 +128,8 @@ describe('skillGroups', () => {
 });
 
 describe('experience', () => {
-  it('has 2 entries with all required fields', () => {
-    expect(experience).toHaveLength(2);
+  it('has 1 entry with all required fields', () => {
+    expect(experience).toHaveLength(1);
     for (const entry of experience) {
       expect(entry.company).toBeTruthy();
       expect(entry.role).toBeTruthy();
@@ -125,6 +137,32 @@ describe('experience', () => {
       expect(entry.summary).toBeTruthy();
       expect(entry.bullets.length).toBeGreaterThan(0);
     }
+  });
+});
+
+describe('education', () => {
+  it('has 1 entry with all required fields', () => {
+    expect(education).toHaveLength(1);
+    for (const entry of education) {
+      expect(entry.institution).toBeTruthy();
+      expect(entry.degree).toBeTruthy();
+      expect(entry.label).toBeTruthy();
+      expect(entry.summary).toBeTruthy();
+      expect(entry.bullets.length).toBeGreaterThan(0);
+    }
+  });
+});
+
+describe('background', () => {
+  it('includes service, volunteering, and language metadata', () => {
+    expect(militaryService.title).toBeTruthy();
+    expect(militaryService.organization).toBeTruthy();
+    expect(volunteering.title).toBeTruthy();
+    expect(volunteering.organization).toBeTruthy();
+    expect(languages).toEqual([
+      { language: 'Hebrew', level: 'Native' },
+      { language: 'English', level: 'Fluent' },
+    ]);
   });
 });
 

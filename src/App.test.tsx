@@ -9,7 +9,7 @@ describe('App', () => {
 
   it('renders all section ids', () => {
     render(<App />);
-    for (const id of ['projects', 'demo', 'skills', 'experience', 'about', 'contact']) {
+    for (const id of ['projects', 'demo', 'skills', 'experience', 'education', 'background', 'contact']) {
       expect(document.getElementById(id)).toBeInTheDocument();
     }
   });
@@ -43,10 +43,12 @@ describe('App', () => {
     expect(screen.getByText('Modeling & Collaboration')).toBeInTheDocument();
   });
 
-  it('renders both experience entries', () => {
+  it('renders experience, education, and background details', () => {
     render(<App />);
     expect(screen.getByText('aiOla')).toBeInTheDocument();
     expect(screen.getByText('Tel Aviv University')).toBeInTheDocument();
+    expect(screen.getByText('Search and Rescue Combat Soldier')).toBeInTheDocument();
+    expect(screen.getByText('Hebrew')).toBeInTheDocument();
   });
 
   it('renders contact section with all links', () => {

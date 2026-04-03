@@ -14,6 +14,7 @@ import {
   availabilityStatus,
   contactLinks,
   demoSection,
+  education,
   experience,
   footerMeta,
   heroFacts,
@@ -89,6 +90,14 @@ export default function App() {
           visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: revealEase } },
         },
       };
+
+  const educationEntries = education.map((entry) => ({
+    company: entry.institution,
+    role: entry.degree,
+    label: entry.label,
+    summary: entry.summary,
+    bullets: entry.bullets,
+  }));
 
   return (
     <div className="min-h-screen bg-background text-text">
@@ -197,44 +206,85 @@ export default function App() {
           {...sectionMotion}
         >
           <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
-            <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
-              <SectionTitle
-                eyebrow="About"
-                title="Additional context drawn directly from the CV."
-                description="Beyond core AI workflow work, the background includes engineering studies, military service, first-aid volunteering, and bilingual communication."
-              />
+            <SectionTitle
+              eyebrow="Education"
+              title="Engineering training that supports the current AI systems work."
+              description="Formal coursework and quantitative foundations from Tel Aviv University complement the applied workflow, evaluation, and tooling experience."
+            />
 
-              <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 shadow-card backdrop-blur-xl sm:rounded-[2rem] sm:p-6">
-                <div className="grid gap-4">
-                  <div className="panel-hover rounded-3xl border border-white/8 bg-slate-950/75 p-5">
-                    <div className="ui-eyebrow text-accent-soft">Current focus</div>
-                    <p className="mt-3 text-sm leading-7 text-slate-300 sm:text-base">
-                      At aiOla, the work centers on designing, evaluating, and improving
-                      LLM-based workflows that turn spoken conversations into structured
-                      business data, with internal tooling for automation, validation, and
-                      operational analysis.
-                    </p>
-                  </div>
-
-                  <div className="panel-hover rounded-3xl border border-white/8 bg-slate-950/75 p-5">
-                    <div className="ui-eyebrow text-accent-soft">Education &amp; service</div>
-                    <p className="mt-3 text-sm leading-7 text-slate-300 sm:text-base">
-                      Or Barak earned a B.Sc. in Mechanical Engineering from Tel Aviv
-                      University and served as a Search and Rescue Combat Soldier from 2015
-                      to 2018.
-                    </p>
-                  </div>
+            <motion.div className="mt-12 space-y-8" {...staggerContainer}>
+              {educationEntries.map((entry, index) => (
+                <motion.div key={entry.company} {...staggerChild}>
+                  <ExperienceItem
+                    entry={entry}
+                    index={index}
+                    isLast={index === educationEntries.length - 1}
+                    badge="education"
+                  />
                 </motion.div>
               ))}
             </motion.div>
+          </div>
+        </motion.section>
 
-                  <div className="panel-hover rounded-3xl border border-white/8 bg-slate-950/75 p-5">
-                    <div className="ui-eyebrow text-accent-soft">Languages &amp; volunteering</div>
-                    <p className="mt-3 text-sm leading-7 text-slate-300 sm:text-base">
-                      Hebrew is native, English is fluent, and the CV also lists volunteer
-                      first-aid work with Magen David Adom.
-                    </p>
-                  </div>
+        <motion.section
+          id="background"
+          className="scroll-mt-28 py-24 sm:py-28"
+          {...sectionMotion}
+        >
+          <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+            <SectionTitle
+              eyebrow="Background"
+              title="Service, volunteering, and language fluency that support client-facing AI work."
+              description="The broader CV also includes military service, first-aid volunteering, and bilingual communication used in technical collaboration and stakeholder-facing delivery."
+            />
+
+            <motion.div className="mt-12 grid gap-6 lg:grid-cols-3" {...staggerContainer}>
+              <motion.div
+                {...staggerChild}
+                className="panel-hover rounded-2xl border border-white/10 bg-white/[0.03] p-5 shadow-card backdrop-blur-xl sm:rounded-[2rem] sm:p-6"
+              >
+                <div className="ui-eyebrow text-accent-soft">{militaryService.label}</div>
+                <h3 className="mt-3 text-2xl font-semibold text-white">{militaryService.title}</h3>
+                <p className="mt-2 text-base font-medium text-slate-200">
+                  {militaryService.organization}
+                </p>
+                <p className="mt-5 text-sm leading-7 text-slate-300 sm:text-base">
+                  {militaryService.description}
+                </p>
+              </motion.div>
+
+              <motion.div
+                {...staggerChild}
+                className="panel-hover rounded-2xl border border-white/10 bg-white/[0.03] p-5 shadow-card backdrop-blur-xl sm:rounded-[2rem] sm:p-6"
+              >
+                <div className="ui-eyebrow text-accent-soft">{volunteering.label}</div>
+                <h3 className="mt-3 text-2xl font-semibold text-white">{volunteering.title}</h3>
+                <p className="mt-2 text-base font-medium text-slate-200">
+                  {volunteering.organization}
+                </p>
+                <p className="mt-5 text-sm leading-7 text-slate-300 sm:text-base">
+                  {volunteering.description}
+                </p>
+              </motion.div>
+
+              <motion.div
+                {...staggerChild}
+                className="panel-hover rounded-2xl border border-white/10 bg-white/[0.03] p-5 shadow-card backdrop-blur-xl sm:rounded-[2rem] sm:p-6"
+              >
+                <div className="ui-eyebrow text-accent-soft">Languages</div>
+                <div className="mt-5 grid gap-3">
+                  {languages.map((language) => (
+                    <div
+                      key={language.language}
+                      className="rounded-2xl border border-white/8 bg-slate-950/75 px-4 py-3"
+                    >
+                      <div className="text-sm font-medium text-white">{language.language}</div>
+                      <div className="mt-1 font-mono text-xs text-accent-soft">
+                        {language.level}
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </motion.div>
             </motion.div>
