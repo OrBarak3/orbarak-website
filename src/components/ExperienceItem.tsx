@@ -3,14 +3,18 @@ import type { ExperienceEntry } from '../types/portfolio';
 interface ExperienceItemProps {
   entry: ExperienceEntry;
   isLast: boolean;
+  index?: number;
+  badge?: string;
 }
 
-export function ExperienceItem({ entry, isLast }: ExperienceItemProps) {
+export function ExperienceItem({ entry, isLast, index, badge = 'experience' }: ExperienceItemProps) {
+  const displayNumber = index !== undefined ? index + 1 : (isLast ? 2 : 1);
+
   return (
     <div className="relative pl-10">
       {!isLast ? <div className="absolute left-[15px] top-10 h-[calc(100%+2rem)] w-px bg-gradient-to-b from-accent/20 via-white/10 to-white/5" /> : null}
       <div className="absolute left-0 top-2 flex h-8 w-8 items-center justify-center rounded-full border border-accent/35 bg-accent/10 font-mono text-xs text-accent">
-        0{isLast ? 2 : 1}
+        0{displayNumber}
       </div>
 
       <div className="panel-hover rounded-2xl border border-white/10 bg-white/[0.03] p-5 shadow-card backdrop-blur-xl sm:rounded-[2rem] sm:p-6">
