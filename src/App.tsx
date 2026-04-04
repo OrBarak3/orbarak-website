@@ -122,7 +122,7 @@ export default function App() {
           <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
             <SectionTitle
               eyebrow="Projects"
-              title="Selected professional projects centered on tagging automation and transcript review."
+              title="Selected professional projects centered on AI workflows automation and agentic review."
               description="The featured work focuses on structured validation, LLM routing logic, and selective human review to reduce manual effort without losing control over quality."
             />
 
@@ -162,7 +162,7 @@ export default function App() {
             <SectionTitle
               eyebrow="Skills"
               title="Tools and skills used in day-to-day applied AI work."
-              description="This section follows the CV directly: LLM workflow design, agentic tooling, internal Python systems, data pipelines, and cross-functional delivery skills."
+              description="LLM workflow design, agentic tooling, internal Python systems, data pipelines, and cross-functional delivery skills."
             />
 
             <motion.div className="mt-12 grid gap-6 lg:grid-cols-2" {...staggerContainer}>
@@ -208,7 +208,7 @@ export default function App() {
           <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
             <SectionTitle
               eyebrow="Education"
-              title="Engineering training that supports the current AI systems work."
+              title="Engineering education, programming, and machine learning focus"
               description="Formal coursework and quantitative foundations from Tel Aviv University complement the applied workflow, evaluation, and tooling experience."
             />
 
