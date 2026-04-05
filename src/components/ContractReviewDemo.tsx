@@ -1,6 +1,13 @@
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import { resolveDemoApiConfig } from '../utils/demoApiConfig';
+import {
+  formatClauseTypeLabel,
+  formatPolicyTriggerLabel,
+  formatRouteLabel,
+  getClauseDisplayContent,
+  getStatusConfig,
+} from '../utils/formatContractReview';
 
 // ── types ─────────────────────────────────────────────────────────────────────
 
@@ -15,6 +22,8 @@ interface ClauseExtractionOut {
   risk_level: 'low' | 'medium' | 'high';
   confidence: number;
   evidence_spans: string[];
+  clause_text?: string;
+  display_snippet?: string;
 }
 
 interface PolicyResults {
@@ -81,59 +90,43 @@ const RISK_COLORS: Record<'low' | 'medium' | 'high', string> = {
   low: 'border-emerald-400/25 bg-emerald-400/5 text-emerald-300',
 };
 
-const STATUS_CONFIG: Record<string, { classes: string; label: string }> = {
-  approved_automatically: {
-    classes: 'border-emerald-400/25 bg-emerald-400/10 text-emerald-200',
-    label: 'Approved Automatically',
-  },
-  approved_by_reviewer: {
-    classes: 'border-emerald-400/25 bg-emerald-400/10 text-emerald-200',
-    label: 'Approved by Reviewer',
-  },
-  approved_with_edits: {
-    classes: 'border-cyan-400/25 bg-cyan-400/10 text-cyan-200',
-    label: 'Approved with Edits',
-  },
-  rejected_by_reviewer: {
-    classes: 'border-rose-400/25 bg-rose-400/10 text-rose-200',
-    label: 'Rejected by Reviewer',
-  },
-  needs_manual_parse: {
-    classes: 'border-amber-400/25 bg-amber-400/10 text-amber-200',
-    label: 'Needs Manual Review',
-  },
-  failed: {
-    classes: 'border-red-400/25 bg-red-400/10 text-red-300',
-    label: 'Failed',
-  },
-};
-
 // ── helpers ───────────────────────────────────────────────────────────────────
 
 function isInterrupted(r: RunResponse): r is RunInterruptedResponse {
   return r.status === 'interrupted';
 }
 
-function getStatusConfig(status: string) {
-  return STATUS_CONFIG[status] ?? { classes: 'border-white/10 bg-white/5 text-slate-300', label: status };
-}
-
 // ── sub-components ────────────────────────────────────────────────────────────
 
 function ClauseCard({ clause }: { clause: ClauseExtractionOut }) {
+  const displayContent = getClauseDisplayContent(clause);
   const riskClass = RISK_COLORS[clause.risk_level];
+  const clauseTypeLabel = formatClauseTypeLabel(clause.clause_type);
+
   return (
     <div className="rounded-2xl border border-white/8 bg-slate-950/75 p-4">
       <div className="flex flex-wrap items-center gap-2">
         <span className="font-mono text-xs text-slate-500">{clause.clause_id}</span>
         <span className="rounded-full border border-white/10 bg-white/[0.04] px-2 py-0.5 font-mono text-xs text-slate-300">
-          {clause.clause_type}
+          {clauseTypeLabel}
         </span>
         <span className={`ml-auto rounded-full border px-2 py-0.5 font-mono text-xs ${riskClass}`}>
           {clause.risk_level.toUpperCase()} RISK
         </span>
       </div>
-      <p className="mt-3 text-sm leading-6 text-slate-200">{clause.summary}</p>
+      <p className="mt-3 text-sm leading-6 text-slate-100">{displayContent.summary}</p>
+      {displayContent.supportLine && (
+        <p
+          className={`mt-3 rounded-2xl border px-3 py-2 text-xs leading-5 ${
+            displayContent.emphasizedEvidence
+              ? 'border-rose-400/20 bg-rose-400/5 text-rose-100'
+              : 'border-white/8 bg-white/[0.03] text-slate-400'
+          }`}
+        >
+          {displayContent.emphasizedEvidence ? 'Why it matters: ' : ''}
+          {displayContent.supportLine}
+        </p>
+      )}
       {clause.obligations.length > 0 && (
         <div className="mt-2 space-y-1">
           {clause.obligations.map((ob) => (
@@ -164,6 +157,7 @@ interface ContractReviewDemoProps {
 }
 
 type DemoPhase = 'idle' | 'running' | 'interrupted' | 'completed' | 'error';
+const GENERIC_ERROR_MESSAGE = "The demo couldn't complete this run. Please try again or use the sample contract.";
 
 export function ContractReviewDemo({ exampleContract }: ContractReviewDemoProps) {
   const shouldReduceMotion = useReducedMotion();
@@ -353,7 +347,6 @@ export function ContractReviewDemo({ exampleContract }: ContractReviewDemoProps)
     resumeResult?.final_status ?? runResult?.final_status ?? '';
   const completedRoute =
     resumeResult?.route ?? runResult?.route ?? '';
-  const completedPolicyResults = runResult?.policy_results;
 
   return (
     <article className="panel-hover rounded-2xl border border-white/10 bg-white/[0.03] p-5 shadow-card backdrop-blur-xl sm:rounded-[2rem] sm:p-8">
@@ -398,7 +391,7 @@ export function ContractReviewDemo({ exampleContract }: ContractReviewDemoProps)
                   spellCheck={false}
                 />
                 <p className="mt-1 text-xs text-slate-600">
-                  Pre-loaded with a high-risk vendor MSA — will trigger the human review path.
+                  Sample contract is curated to trigger the reviewer approval path on the first run.
                 </p>
               </div>
             )}
@@ -458,7 +451,7 @@ export function ContractReviewDemo({ exampleContract }: ContractReviewDemoProps)
         {/* ── PROGRESS PANEL ── */}
         {phase === 'running' && (
           <motion.div key="progress" {...panelAnim}>
-            <div className="ui-eyebrow text-accent-soft">Analyzing contract…</div>
+            <div className="ui-eyebrow text-accent-soft">Analyzing contract through the review workflow...</div>
             <div className="mt-6 space-y-3">
               {GRAPH_NODES.map((node, idx) => {
                 const done = idx < visibleNodeIndex;
@@ -507,7 +500,7 @@ export function ContractReviewDemo({ exampleContract }: ContractReviewDemoProps)
             <div>
               <div className="ui-eyebrow text-amber-400/80">Human Review Required</div>
               <p className="mt-2 text-sm leading-6 text-slate-300">
-                Policy flagged this contract. Review the clauses below and submit your decision.
+                Policy flagged this contract for reviewer approval.
               </p>
             </div>
 
@@ -521,7 +514,7 @@ export function ContractReviewDemo({ exampleContract }: ContractReviewDemoProps)
                       key={reason}
                       className="rounded-full border border-amber-400/20 bg-amber-400/5 px-3 py-1 font-mono text-xs text-amber-200"
                     >
-                      {reason}
+                      {formatPolicyTriggerLabel(reason)}
                     </span>
                   ))}
                 </div>
@@ -586,14 +579,9 @@ export function ContractReviewDemo({ exampleContract }: ContractReviewDemoProps)
               >
                 {getStatusConfig(completedStatus).label}
               </span>
-              {completedRoute && (
+              {formatRouteLabel(completedRoute) && (
                 <span className="font-mono text-xs text-slate-500">
-                  route: {completedRoute}
-                </span>
-              )}
-              {completedPolicyResults && (
-                <span className="font-mono text-xs text-slate-500">
-                  provider: heuristic
+                  path: {formatRouteLabel(completedRoute)}
                 </span>
               )}
             </div>
@@ -644,7 +632,12 @@ export function ContractReviewDemo({ exampleContract }: ContractReviewDemoProps)
           <motion.div key="error" {...panelAnim} className="space-y-4">
             <div className="rounded-2xl border border-red-400/20 bg-red-400/5 p-5">
               <div className="ui-eyebrow text-red-400/80">Error</div>
-              <p className="mt-2 text-sm leading-6 text-red-300">{errorMessage}</p>
+              <p className="mt-2 text-sm leading-6 text-red-300">
+                {GENERIC_ERROR_MESSAGE}
+              </p>
+              {errorMessage && errorMessage !== GENERIC_ERROR_MESSAGE && (
+                <p className="mt-2 text-xs leading-5 text-red-200/80">{errorMessage}</p>
+              )}
             </div>
             <button
               type="button"

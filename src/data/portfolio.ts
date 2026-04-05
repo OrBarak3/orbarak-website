@@ -62,24 +62,28 @@ export const heroSnippet = `{
 
 export const demoSection = {
   eyebrow: 'Live Demo',
-  title: 'Contract Review — try the actual LangGraph workflow.',
+  title: 'Contract Review - try the Demo!',
   description:
-    'Paste or upload a vendor contract and watch the 7-node LangGraph pipeline parse clauses, extract risk details, apply policy rules, and route to automatic approval or a human review panel — all backed by a real Python service.',
+    'Paste or upload a contract to see the workflow extract clauses, flag risk, apply policy, and route to auto-approval or human review.',
   exampleContract: `1. Services
 
-Vendor will provide implementation and support services for the platform described in the order form.
+Vendor will provide implementation, onboarding, and support services for the software platform described in the Order Form.
 
 2. Indemnity
 
-Customer shall indemnify, defend, and hold harmless Vendor and its affiliates from any and all claims, damages, and losses arising from Customer's use of the services.
+Customer shall indemnify, defend, and hold harmless Vendor and its affiliates from any third-party claims, damages, penalties, and losses arising from Customer's use of the services.
 
 3. Liability
 
-Vendor's liability is unlimited for any claim related to this Agreement, including indirect, consequential, and punitive damages.
+Vendor's liability is unlimited for all claims related to this Agreement, including indirect, consequential, special, and punitive damages.
 
 4. Renewal
 
-This Agreement renews automatically for successive one-year terms unless Customer provides written notice at least 90 days before the renewal date.`,
+This Agreement renews automatically for successive one-year terms unless Customer provides written notice at least 90 days before the renewal date.
+
+5. Governing Law
+
+This Agreement will be governed by the laws of New York, without regard to conflict-of-law rules.`,
 };
 
 export const projects: Project[] = [
