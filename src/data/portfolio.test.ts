@@ -111,8 +111,8 @@ describe('demoSection', () => {
   it('includes the copy required to render the contract review demo', () => {
     expect(demoSection.eyebrow).toBeTruthy();
     expect(demoSection.title).toContain('Contract Review');
-    expect(demoSection.description).toContain('LangGraph');
-    expect(demoSection.exampleContract).toContain('1. Services');
+    expect(demoSection.description).toContain('flag risk');
+    expect(demoSection.exampleContract).toContain('5. Governing Law');
   });
 });
 

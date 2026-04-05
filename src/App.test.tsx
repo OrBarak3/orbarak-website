@@ -30,7 +30,7 @@ describe('App', () => {
     render(<App />);
     expect(screen.getByText('Live Demo')).toBeInTheDocument();
     expect(
-      screen.getByText('Contract Review — try the actual LangGraph workflow.'),
+      screen.getByText('Contract Review - try the Demo!'),
     ).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /Run Contract Review/i })).toBeInTheDocument();
   });
